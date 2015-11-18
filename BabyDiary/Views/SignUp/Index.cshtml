@@ -1,0 +1,49 @@
+﻿@model BabyDiary.Models.SignUp
+
+@{
+    ViewBag.Title = "Регистрация";
+
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+    <div class="panel-success">
+        <div class="panel-heading text-center">
+            <h4>Регистрация</h4>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                <div class="form-group">
+                    @Html.Label("E-mail", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Логин", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Login)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Пароль", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Подтверждение пароля", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                    </div>
+                </div>
+                <div class="text-center">
+                    <input type="submit" value="Зарегистрироваться" class="btn btn-success" />
+                </div>
+            }
+        </div>
+    </div>
