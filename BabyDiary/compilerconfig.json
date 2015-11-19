@@ -1,6 +1,9 @@
 ﻿[
   {
     "outputFile": "Content/css/styles.css",
-    "inputFile": "Content/less/styles.less"
+    "inputFile": "Content/less/styles.less",
+    "options": {
+      "relativeUrls": false
+    }
   }
 ]
