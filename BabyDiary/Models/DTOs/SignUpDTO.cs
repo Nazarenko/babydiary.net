@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BabyDiary.Models
 {
-    public class SignUp
+    public class SignUpDTO
     {
         [Required(ErrorMessage = "Пожалуйста, укажите e-mail")]
         [DataType(DataType.EmailAddress)]

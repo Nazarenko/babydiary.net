@@ -1,4 +1,5 @@
-﻿using BabyDiary.Models;
+﻿using BabyDiary.Business.Interfaces;
+using BabyDiary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace BabyDiary.Controllers
 {
     public class SignUpController : Controller
     {
+        private readonly IUserProvider _userProvider;
+
+        public SignUpController(IUserProvider userProvider)
+        {
+            _userProvider = userProvider;
+        }
+
         // GET: SignUp
         public ActionResult Index()
         {
@@ -16,7 +24,7 @@ namespace BabyDiary.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(SignUp user)
+        public ActionResult Index(SignUpDTO user)
         {
             if (ModelState.IsValid)
                 return View("SignUpConfirmation");
@@ -24,12 +32,12 @@ namespace BabyDiary.Controllers
                 return View();
         }
 
-        public ActionResult IsEmailAvailble(string email)
+        public ActionResult IsEmailAvailble(string Email)
         {
-            return Json(false, JsonRequestBehavior.AllowGet);
+            return Json(_userProvider.IsEmailAvailable(Email), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult IsLoginAvailble(string login)
+        public ActionResult IsLoginAvailble(string Login)
         {
             return Json(false, JsonRequestBehavior.AllowGet);
         }
