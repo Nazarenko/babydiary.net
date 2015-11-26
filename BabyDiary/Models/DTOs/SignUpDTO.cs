@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BabyDiary.Models
+namespace BabyDiary.Models.DTOs
 {
-    public class SignUpDTO
+    public class SignUpDto
     {
         [Required(ErrorMessage = "Пожалуйста, укажите e-mail")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "Пожалуйста, укажите e-mail верного формата")]
+        [StringLength(100, ErrorMessage = "Email должен содержать до {1} символов")]
         [System.Web.Mvc.Remote("IsEmailAvailble", "SignUp", ErrorMessage = "Этот e-mail уже зарегистрирован")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Пожалуйста, укажите логин")]
         [RegularExpression(@"^[a-zA-Z0-9_-]+$", ErrorMessage = "Логин может состоять только из латинских символов, цифр, одинарного дефиса или знака подчеркивания")]
-        [StringLength(30, ErrorMessage = "Логин должен содержать от {2} до {1} символов", MinimumLength = 3)]
+        [StringLength(50, ErrorMessage = "Логин должен содержать от {2} до {1} символов", MinimumLength = 3)]
         [System.Web.Mvc.Remote("IsLoginAvailble", "SignUp", ErrorMessage = "Этот логин уже используется")]
         public string Login { get; set; }
 

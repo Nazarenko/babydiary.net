@@ -1,9 +1,5 @@
 ﻿using BabyDiary.Business.Interfaces;
-using BabyDiary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using BabyDiary.Models.DTOs;
 using System.Web.Mvc;
 
 namespace BabyDiary.Controllers
@@ -20,26 +16,38 @@ namespace BabyDiary.Controllers
         // GET: SignUp
         public ActionResult Index()
         {
+//            HttpApplication httpApps = HttpContext.ApplicationInstance;
+//            //Get List of modules in module collections
+//            HttpModuleCollection httpModuleCollections = httpApps.Modules;
+//            Response.Write("Total Number Active HttpModule : " + httpModuleCollections.Count.ToString() + "</br>");
+//            Response.Write("<b>List of Active Modules</b>" + "</br>");
+//            foreach (string activeModule in httpModuleCollections.AllKeys)
+//            {
+//                Response.Write(activeModule + "</br>");
+//            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(SignUpDTO user)
+        public ActionResult Index(SignUpDto user)
         {
             if (ModelState.IsValid)
+            {
+                _userProvider.SignUp(user);
                 return View("SignUpConfirmation");
+            }
             else
                 return View();
         }
 
-        public ActionResult IsEmailAvailble(string Email)
+        public ActionResult IsEmailAvailble(string email)
         {
-            return Json(_userProvider.IsEmailAvailable(Email), JsonRequestBehavior.AllowGet);
+            return Json(_userProvider.IsEmailAvailable(email), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult IsLoginAvailble(string Login)
+        public ActionResult IsLoginAvailble(string login)
         {
-            return Json(false, JsonRequestBehavior.AllowGet);
+            return Json(_userProvider.IsLoginAvailable(login), JsonRequestBehavior.AllowGet);
         }
     }
 

@@ -1,7 +1,6 @@
 namespace BabyDiary.DAL {
     using System;
     using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using Models.Entities;
 
@@ -16,6 +15,24 @@ namespace BabyDiary.DAL {
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+        }
+
+        public override int SaveChanges()
+        {
+            var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+            foreach (var entity in entities)
+            {
+                if (entity.State == EntityState.Added)
+                {
+                    ((BaseEntity)entity.Entity).CreatedDate = DateTime.Now;
+                    ((BaseEntity)entity.Entity).Enabled = true;
+                }
+
+                ((BaseEntity)entity.Entity).ModifiedDate = DateTime.Now;
+            }
+
+            return base.SaveChanges();
         }
     }
 }

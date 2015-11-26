@@ -1,29 +1,50 @@
-﻿using Ninject;
-using Ninject.Web.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace BabyDiary
 {
-    public class MvcApplication : NinjectHttpApplication
+    public class MvcApplication : System.Web.HttpApplication
     {
-        protected override void OnApplicationStarted()
+        protected void Application_Start()
         {
-            base.OnApplicationStarted();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
-
-        protected override IKernel CreateKernel()
-        {
-            var kernel = new StandardKernel();
-            kernel.Load(Assembly.GetExecutingAssembly());
-            return kernel;
-        }
     }
 }
+
+//using Ninject;
+//using Ninject.Web.Common;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Reflection;
+//using System.Web;
+//using System.Web.Mvc;
+//using System.Web.Routing;
+
+//namespace BabyDiary
+//{
+//    public class MvcApplication : NinjectHttpApplication
+//    {
+//        protected override void OnApplicationStarted()
+//        {
+//            base.OnApplicationStarted();
+//            AreaRegistration.RegisterAllAreas();
+//            RouteConfig.RegisterRoutes(RouteTable.Routes);
+//        }
+
+//        protected override IKernel CreateKernel()
+//        {
+//            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
+//            DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
+//            var kernel = new StandardKernel();
+//            kernel.Load(Assembly.GetExecutingAssembly());
+//            return kernel;
+//        }
+//    }
+//}
