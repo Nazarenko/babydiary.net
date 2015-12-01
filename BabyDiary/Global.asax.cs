@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity.Infrastructure.Interception;
 using System.Web.Mvc;
 using System.Web.Routing;
+using BabyDiary.DAL;
+using BabyDiary.Models;
+using Resources;
 
 namespace BabyDiary
 {
@@ -13,6 +13,9 @@ namespace BabyDiary
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            DbInterception.Add(new BabyDiaryLoggingInterceptor());
+
+            ModelMetadataProviders.Current = new DataAnnotationsResourcesModelMetadataProvider(typeof(ValidationMessages));
         }
     }
 }

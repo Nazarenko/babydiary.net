@@ -4,28 +4,25 @@ namespace BabyDiary.Models.DTOs
 {
     public class SignUpDto
     {
-        [Required(ErrorMessage = "Пожалуйста, укажите e-mail")]
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress(ErrorMessage = "Пожалуйста, укажите e-mail верного формата")]
-        [StringLength(100, ErrorMessage = "Email должен содержать до {1} символов")]
-        [System.Web.Mvc.Remote("IsEmailAvailble", "SignUp", ErrorMessage = "Этот e-mail уже зарегистрирован")]
+        [Required]
+        [EmailAddress(ErrorMessage = null)]
+        [StringLength(100)]
+        [System.Web.Mvc.Remote("IsEmailAvailble", "SignUp", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Пожалуйста, укажите логин")]
-        [RegularExpression(@"^[a-zA-Z0-9_-]+$", ErrorMessage = "Логин может состоять только из латинских символов, цифр, одинарного дефиса или знака подчеркивания")]
-        [StringLength(50, ErrorMessage = "Логин должен содержать от {2} до {1} символов", MinimumLength = 3)]
-        [System.Web.Mvc.Remote("IsLoginAvailble", "SignUp", ErrorMessage = "Этот логин уже используется")]
+        [Required]
+        [RegularExpression(@"^[a-zA-Z0-9_-]+$")]
+        [StringLength(50, MinimumLength = 3)]
+        [System.Web.Mvc.Remote("IsLoginAvailble", "SignUp", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
         public string Login { get; set; }
 
-        [Required(ErrorMessage = "Необходимо ввести пароль")]
-        [DataType(DataType.Password)]
-        [RegularExpression(@"^[!-~]*$", ErrorMessage = "Пароль содержит запрещённые символы")]
-        [StringLength(255, ErrorMessage = "Пароль должен содержать от {2} до {1} символов", MinimumLength = 8)]
+        [Required]
+        [RegularExpression(@"^[!-~]*$")]
+        [StringLength(255, MinimumLength = 8)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Введите пароль еще раз")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Подтверждение не совпадает с паролем")]
+        [Required]
+        [Compare("Password")]
         public string ConfirmPassword { get; set; }
     }
 }

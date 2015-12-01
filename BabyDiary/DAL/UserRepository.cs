@@ -1,51 +1,38 @@
 ﻿using BabyDiary.DAL.Interfaces;
 using System.Linq;
 using BabyDiary.Models.Entities;
+using System;
+using System.Collections.Generic;
+using BabyDiary.DAL.FilterSearch;
 
 namespace BabyDiary.DAL
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : Repository<User>, IUserRepository
     {
-        private readonly BabyDiaryContext _context;
-
-        public UserRepository(BabyDiaryContext context)
+        public UserRepository(BabyDiaryContext context) : base(context)
         {
-            _context = context;
         }
 
         public User CreateUser(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            // TODO update user class
+            ctx.Users.Add(user);
+            ctx.SaveChanges();
             return user;
         }
 
-        public User FindUserByEmail(string email)
+        public User FindUserBy(Filter filter)
         {
-            var user = (from u in _context.Users
-                           where u.Email == email
-                           select u).FirstOrDefault<User>();
-            return user;
+            var query = from u in ctx.Users select u;
+            var deleg = ExpressionBuilder.GetExpression<User>(filter);
+            return query.Where(deleg).FirstOrDefault();
         }
 
-        public User FindUserByLogin(string login)
+        public User FindUserBy(IList<Filter> filters)
         {
-            var user = (from u in _context.Users
-                        where u.Login == login
-                        select u).FirstOrDefault<User>();
-            return user;
+            var query = from u in ctx.Users select u;
+            var deleg = ExpressionBuilder.GetExpression<User>(filters);
+            return query.Where(deleg).FirstOrDefault();
         }
 
-        public User UpdateUser(User user)
-        {
-            _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            _context.SaveChanges();
-            return user;
-
-//            entities.Students.Attach(entities.Students.Single(c => c.ID == student.ID));
-//            entities.Students.ApplyCurrentValues(student);
-//            entities.Savechanges();
-        }
     }
 }

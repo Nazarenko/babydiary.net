@@ -6,7 +6,8 @@ namespace BabyDiary.Business.Interfaces
     {
         bool IsEmailAvailable(string email);
         bool IsLoginAvailable(string login);
-        void SignUp(SignUpDto signUpDto);
+        void CreateNewUser(SignUpDto signUpDto);
         void ChangePassword(string passwordOld, string passwordNew);
+        void ActivateUser(string hash);
     }
 }

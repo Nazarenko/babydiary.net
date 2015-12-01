@@ -16,6 +16,7 @@
         <div class="sign-up-block">
             @using (Html.BeginForm("Index", "SignUp", FormMethod.Post, new { @class = "form-horizontal" }))
             {
+                @Html.AntiForgeryToken()
                 <div class="form-group">
                     @Html.Label("E-mail", new { @class = "control-label col-md-3" })
                     <div class="col-md-9">

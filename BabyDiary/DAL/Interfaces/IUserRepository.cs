@@ -1,12 +1,13 @@
-﻿using BabyDiary.Models.Entities;
+﻿using System.Collections.Generic;
+using BabyDiary.DAL.FilterSearch;
+using BabyDiary.Models.Entities;
 
 namespace BabyDiary.DAL.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
-        User FindUserByEmail(string email);
-        User FindUserByLogin(string login);
+        User FindUserBy(IList<Filter> filters);
+        User FindUserBy(Filter filter);
         User CreateUser(User user);
-        User UpdateUser(User user);
     }
 }

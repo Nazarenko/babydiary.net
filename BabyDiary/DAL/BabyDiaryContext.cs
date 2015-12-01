@@ -11,6 +11,11 @@ namespace BabyDiary.DAL {
         {
         }
 
+        static BabyDiaryContext()
+        {
+            Database.SetInitializer<BabyDiaryContext>(null);
+        }
+
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

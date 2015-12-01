@@ -26,7 +26,7 @@ namespace BabyDiary.Models.Entities
         [StringLength(100)]
         public string ActivatedHash { get; set; }
 
-        public byte Activated { get; set; }
+        public bool Activated { get; set; }
 
         [StringLength(100)]
         public string AuthKey { get; set; }
