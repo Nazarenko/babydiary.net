@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidUsernameOrPassword" xml:space="preserve">
+    <value>Неверно введено имя пользователя или пароль</value>
+  </data>
+  <data name="SignInLoginRequired" xml:space="preserve">
+    <value>Введите логин</value>
+  </data>
+  <data name="SignInPasswordRequired" xml:space="preserve">
+    <value>Введите пароль</value>
+  </data>
   <data name="SignUpConfirmPasswordCompare" xml:space="preserve">
     <value>Подтверждение не совпадает с паролем</value>
   </data>

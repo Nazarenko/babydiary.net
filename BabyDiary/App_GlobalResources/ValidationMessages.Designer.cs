@@ -61,6 +61,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Неверно введено имя пользователя или пароль.
+        /// </summary>
+        internal static string InvalidUsernameOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidUsernameOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите логин.
+        /// </summary>
+        internal static string SignInLoginRequired {
+            get {
+                return ResourceManager.GetString("SignInLoginRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите пароль.
+        /// </summary>
+        internal static string SignInPasswordRequired {
+            get {
+                return ResourceManager.GetString("SignInPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Подтверждение не совпадает с паролем.
         /// </summary>
         internal static string SignUpConfirmPasswordCompare {

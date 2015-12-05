@@ -7,7 +7,7 @@ namespace BabyDiary.Business.Helpers
     {
         public const int SaltByteSize = 64;
         public const int HashByteSize = 64;
-        public const int Pbkdf2Iterations = 1000;
+        public const int Pbkdf2Iterations = 5000;
 
         public static string CreateRandomHash()
         {

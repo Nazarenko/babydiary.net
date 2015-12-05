@@ -9,5 +9,6 @@ namespace BabyDiary.Business.Interfaces
         void CreateNewUser(SignUpDto signUpDto);
         void ChangePassword(string passwordOld, string passwordNew);
         void ActivateUser(string hash);
+        SignInInfoDto GetUserSignIn(SignInDto signInDto);
     }
 }

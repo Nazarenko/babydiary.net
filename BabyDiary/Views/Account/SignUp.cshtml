@@ -1,0 +1,55 @@
+﻿@model BabyDiary.Models.DTOs.SignUpDto
+
+@{
+    ViewBag.Title = "Регистрация";
+
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+
+<div id="content" class="col-lg-12 col-md-12 col-sm-12">
+    <div class="block">
+        <div class="ajax-loader">
+            <div class="spinner"></div>
+        </div>
+        <h1>Регистрация</h1>
+        <div class="sign-up-block">
+            @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.Label("E-mail", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Логин", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Login)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Пароль", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Подтверждение пароля", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="signUpButton" class="btn btn-primary">Зарегистрироваться</button>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

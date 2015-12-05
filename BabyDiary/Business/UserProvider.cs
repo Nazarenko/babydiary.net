@@ -32,6 +32,24 @@ namespace BabyDiary.Business
             }
         }
 
+        public SignInInfoDto GetUserSignIn(SignInDto signInDto)
+        {
+            var user = _userRepository.FindUserBy(new Filter("Login", signInDto.Login));
+
+            if (user == null || !PasswordHash.ValidatePassword(signInDto.Password,user.Password))
+            {
+                return new SignInInfoDto() {State = UserState.NotFound};
+            }
+            else
+            {
+                var result = new SignInInfoDto() {Name = user.Name, Login = user.Login, State = UserState.Success};
+                if (!user.Activated) result.State = UserState.NotActivated;
+                if (!user.Enabled) result.State = UserState.Locked;
+                return result;
+            }
+
+        }
+
         public void ChangePassword(string passwordOld, string passwordNew)
         {
             throw new NotImplementedException();
