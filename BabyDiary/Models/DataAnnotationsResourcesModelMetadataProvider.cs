@@ -49,6 +49,15 @@ namespace BabyDiary.Models
                     attr.ErrorMessageResourceType = resourceType;
                     attr.ErrorMessageResourceName = resourceKey;
                 }
+                else
+                {
+                    resourceKey = propertyName + attributeShortName;
+                    if (PropertyExists(resourceType, resourceKey))
+                    {
+                        attr.ErrorMessageResourceType = resourceType;
+                        attr.ErrorMessageResourceName = resourceKey;
+                    }
+                }
             }
         }
 

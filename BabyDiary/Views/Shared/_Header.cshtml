@@ -9,16 +9,26 @@
                             <a class="logo-href" href="/" title="Babydiary">BabyDiary</a>
                         </div>
                     </div>
+                    @Html.Partial("_LoginBlock")
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <nav class="nav nav__primary">
                             <ul id="topnav" class="sf-menu sf-js-enabled">
                                 <li class="first current-menu-item">
-                                    <a href="index" title="Главная">Главная</a>
+                                    @Html.ActionLink("Главная", "Index", "Home")
                                 </li>
                                 <li class="second">
-                                    <a href="diary" title="Дневник">Дневник</a>
+                                    @Html.ActionLink("Дневник","Index","Diary")
+                                </li>
+                                <li class="third">
+                                    <a href="diary" title="Мамы пишут">Мамы пишут</a>
+                                </li>
+                                <li class="fourth">
+                                    <a href="diary" title="Статьи">Статьи</a>
+                                </li>
+                                <li class="fifth">
+                                    <a href="diary" title="Контакты">Контакты</a>
                                 </li>
                             </ul>
                         </nav>

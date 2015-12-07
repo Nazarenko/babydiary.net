@@ -7,13 +7,13 @@ namespace BabyDiary.Models.DTOs
         [Required]
         [EmailAddress(ErrorMessage = null)]
         [StringLength(100)]
-        [System.Web.Mvc.Remote("IsEmailAvailble", "SignUp", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
+        [System.Web.Mvc.Remote("IsEmailAvailble", "Account", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
         public string Email { get; set; }
 
         [Required]
         [RegularExpression(@"^[a-zA-Z0-9_-]+$")]
         [StringLength(50, MinimumLength = 3)]
-        [System.Web.Mvc.Remote("IsLoginAvailble", "SignUp", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
+        [System.Web.Mvc.Remote("IsLoginAvailble", "Account", HttpMethod = "Post", AdditionalFields = "__RequestVerificationToken")]
         public string Login { get; set; }
 
         [Required]

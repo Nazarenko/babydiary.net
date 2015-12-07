@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BabyDiary.DAL.FilterSearch;
 using BabyDiary.Models.Entities;
 
@@ -6,8 +7,8 @@ namespace BabyDiary.DAL.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
-        User FindUserBy(IList<Filter> filters);
-        User FindUserBy(Filter filter);
-        User CreateUser(User user);
+        Task<User> FindUserByAsync(IList<Filter> filters);
+        Task<User> FindUserByAsync(Filter filter);
+        Task<User> CreateUserAsync(User user);
     }
 }

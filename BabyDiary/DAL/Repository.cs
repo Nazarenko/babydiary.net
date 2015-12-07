@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BabyDiary.DAL.FilterSearch;
+﻿using System.Threading.Tasks;
 using BabyDiary.DAL.Interfaces;
 
 namespace BabyDiary.DAL
@@ -15,9 +12,9 @@ namespace BabyDiary.DAL
             ctx = context;
         }
 
-        public void SaveChanges()
+        public async Task SaveChangesAsync()
         {
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
         }
     }
 }

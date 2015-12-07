@@ -3,6 +3,8 @@ using System.Linq;
 using BabyDiary.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Threading.Tasks;
 using BabyDiary.DAL.FilterSearch;
 
 namespace BabyDiary.DAL
@@ -13,25 +15,25 @@ namespace BabyDiary.DAL
         {
         }
 
-        public User CreateUser(User user)
+        public async Task<User> CreateUserAsync(User user)
         {
             ctx.Users.Add(user);
-            ctx.SaveChanges();
+            await ctx.SaveChangesAsync();
             return user;
         }
 
-        public User FindUserBy(Filter filter)
+        public async Task<User> FindUserByAsync(Filter filter)
         {
             var query = from u in ctx.Users select u;
             var deleg = ExpressionBuilder.GetExpression<User>(filter);
-            return query.Where(deleg).FirstOrDefault();
+            return await  query.Where(deleg).FirstOrDefaultAsync();
         }
 
-        public User FindUserBy(IList<Filter> filters)
+        public async Task<User> FindUserByAsync(IList<Filter> filters)
         {
             var query = from u in ctx.Users select u;
             var deleg = ExpressionBuilder.GetExpression<User>(filters);
-            return query.Where(deleg).FirstOrDefault();
+            return await query.Where(deleg).FirstOrDefaultAsync();
         }
 
     }

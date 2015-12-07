@@ -61,11 +61,74 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Подтверждение не совпадает с паролем.
+        /// </summary>
+        internal static string ConfirmPasswordCompare {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordCompare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите пароль еще раз.
+        /// </summary>
+        internal static string ConfirmPasswordRequired {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пожалуйста, укажите e-mail верного формата.
+        /// </summary>
+        internal static string EmailEmailAddress {
+            get {
+                return ResourceManager.GetString("EmailEmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пожалуйста, укажите e-mail.
+        /// </summary>
+        internal static string EmailRequired {
+            get {
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Неверно введено имя пользователя или пароль.
         /// </summary>
         internal static string InvalidUsernameOrPassword {
             get {
                 return ResourceManager.GetString("InvalidUsernameOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пароль содержит запрещённые символы.
+        /// </summary>
+        internal static string PasswordRegularExpression {
+            get {
+                return ResourceManager.GetString("PasswordRegularExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Необходимо ввести пароль.
+        /// </summary>
+        internal static string PasswordRequired {
+            get {
+                return ResourceManager.GetString("PasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пароль должен содержать от {2} до {1} символов.
+        /// </summary>
+        internal static string PasswordStringLength {
+            get {
+                return ResourceManager.GetString("PasswordStringLength", resourceCulture);
             }
         }
         
@@ -88,47 +151,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Подтверждение не совпадает с паролем.
-        /// </summary>
-        internal static string SignUpConfirmPasswordCompare {
-            get {
-                return ResourceManager.GetString("SignUpConfirmPasswordCompare", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Введите пароль еще раз.
-        /// </summary>
-        internal static string SignUpConfirmPasswordRequired {
-            get {
-                return ResourceManager.GetString("SignUpConfirmPasswordRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пожалуйста, укажите e-mail верного формата.
-        /// </summary>
-        internal static string SignUpEmailEmailAddress {
-            get {
-                return ResourceManager.GetString("SignUpEmailEmailAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Этот e-mail уже зарегистрирован.
         /// </summary>
         internal static string SignUpEmailRemote {
             get {
                 return ResourceManager.GetString("SignUpEmailRemote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пожалуйста, укажите e-mail.
-        /// </summary>
-        internal static string SignUpEmailRequired {
-            get {
-                return ResourceManager.GetString("SignUpEmailRequired", resourceCulture);
             }
         }
         
@@ -174,33 +201,6 @@ namespace Resources {
         internal static string SignUpLoginStringLength {
             get {
                 return ResourceManager.GetString("SignUpLoginStringLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пароль содержит запрещённые символы.
-        /// </summary>
-        internal static string SignUpPasswordRegularExpression {
-            get {
-                return ResourceManager.GetString("SignUpPasswordRegularExpression", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Необходимо ввести пароль.
-        /// </summary>
-        internal static string SignUpPasswordRequired {
-            get {
-                return ResourceManager.GetString("SignUpPasswordRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пароль должен содержать от {2} до {1} символов.
-        /// </summary>
-        internal static string SignUpPasswordStringLength {
-            get {
-                return ResourceManager.GetString("SignUpPasswordStringLength", resourceCulture);
             }
         }
     }

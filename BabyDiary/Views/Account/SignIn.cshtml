@@ -12,10 +12,11 @@
         <div class="ajax-loader">
             <div class="spinner"></div>
         </div>
-        <h1>Вход</h1>
+        <h1>@ViewBag.Title</h1>
         <div class="sign-up-block">
-            @using (Html.BeginForm("SignIn", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+            @using (Html.BeginForm("SignIn", "Account", new {ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
+
                 @Html.AntiForgeryToken()
                 @Html.ValidationMessage("Error", new { @class = "text-danger" })
                 <div class="form-group">

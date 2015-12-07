@@ -24,12 +24,12 @@ namespace BabyDiary.Models.Entities
         public string Name { get; set; }
 
         [StringLength(100)]
-        public string ActivatedHash { get; set; }
+        public string ActivatedToken { get; set; }
 
         public bool Activated { get; set; }
 
         [StringLength(100)]
-        public string AuthKey { get; set; }
+        public string ResetPasswordToken { get; set; }
 
     }
 }

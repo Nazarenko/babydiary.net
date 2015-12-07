@@ -117,8 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfirmPasswordCompare" xml:space="preserve">
+    <value>Подтверждение не совпадает с паролем</value>
+  </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>Введите пароль еще раз</value>
+  </data>
+  <data name="EmailEmailAddress" xml:space="preserve">
+    <value>Пожалуйста, укажите e-mail верного формата</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Пожалуйста, укажите e-mail</value>
+  </data>
   <data name="InvalidUsernameOrPassword" xml:space="preserve">
     <value>Неверно введено имя пользователя или пароль</value>
+  </data>
+  <data name="PasswordRegularExpression" xml:space="preserve">
+    <value>Пароль содержит запрещённые символы</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Необходимо ввести пароль</value>
+  </data>
+  <data name="PasswordStringLength" xml:space="preserve">
+    <value>Пароль должен содержать от {2} до {1} символов</value>
   </data>
   <data name="SignInLoginRequired" xml:space="preserve">
     <value>Введите логин</value>
@@ -126,20 +147,8 @@
   <data name="SignInPasswordRequired" xml:space="preserve">
     <value>Введите пароль</value>
   </data>
-  <data name="SignUpConfirmPasswordCompare" xml:space="preserve">
-    <value>Подтверждение не совпадает с паролем</value>
-  </data>
-  <data name="SignUpConfirmPasswordRequired" xml:space="preserve">
-    <value>Введите пароль еще раз</value>
-  </data>
-  <data name="SignUpEmailEmailAddress" xml:space="preserve">
-    <value>Пожалуйста, укажите e-mail верного формата</value>
-  </data>
   <data name="SignUpEmailRemote" xml:space="preserve">
     <value>Этот e-mail уже зарегистрирован</value>
-  </data>
-  <data name="SignUpEmailRequired" xml:space="preserve">
-    <value>Пожалуйста, укажите e-mail</value>
   </data>
   <data name="SignUpEmailStringLength" xml:space="preserve">
     <value>Email должен содержать до {1} символов</value>
@@ -155,14 +164,5 @@
   </data>
   <data name="SignUpLoginStringLength" xml:space="preserve">
     <value>Логин должен содержать от {2} до {1} символов</value>
-  </data>
-  <data name="SignUpPasswordRegularExpression" xml:space="preserve">
-    <value>Пароль содержит запрещённые символы</value>
-  </data>
-  <data name="SignUpPasswordRequired" xml:space="preserve">
-    <value>Необходимо ввести пароль</value>
-  </data>
-  <data name="SignUpPasswordStringLength" xml:space="preserve">
-    <value>Пароль должен содержать от {2} до {1} символов</value>
   </data>
 </root>

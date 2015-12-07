@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using BabyDiary.Business.Interfaces;
 using BabyDiary.Models.DTOs;
 using System.Web.Mvc;
-using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using Resources;
 
 namespace BabyDiary.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly IUserProvider _userProvider;
         private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
@@ -24,53 +23,28 @@ namespace BabyDiary.Controllers
         }
 
         // GET: SignUp
-        [Authorize]
         public ActionResult SignUp()
         {
-            //            HttpApplication httpApps = HttpContext.ApplicationInstance;
-            //            //Get List of modules in module collections
-            //            HttpModuleCollection httpModuleCollections = httpApps.Modules;
-            //            Response.Write("Total Number Active HttpModule : " + httpModuleCollections.Count.ToString() + "</br>");
-            //            Response.Write("<b>List of Active Modules</b>" + "</br>");
-            //            foreach (string activeModule in httpModuleCollections.AllKeys)
-            //            {
-            //                Response.Write(activeModule + "</br>");
-            //            }
             return View();
         }
 
-        protected override void Initialize(RequestContext requestContext)
-        {
-            base.Initialize(requestContext);
-
-            // Grab the user's login information from Identity
-            if (User is ClaimsPrincipal)
-            {
-                var user = User as ClaimsPrincipal;
-                var claims = user.Claims.ToList();
-
-                //var name = GetClaim(claims, ClaimTypes.Name);
-                //var id = GetClaim(claims, ClaimTypes.NameIdentifier);
-
-            }
-
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SignUp(SignUpDto user)
+        public async Task<ActionResult> SignUp(SignUpDto user)
         {
-            if (!_userProvider.IsEmailAvailable(user.Email))
+            if (!await _userProvider.IsEmailAvailableAsync(user.Email))
             {
                 ModelState.AddModelError("Email", ValidationMessages.ResourceManager.GetString("SignUpEmailRemote"));
             }
-            if (!_userProvider.IsLoginAvailable(user.Login))
+            if (!await _userProvider.IsLoginAvailableAsync(user.Login))
             {
                 ModelState.AddModelError("Login", ValidationMessages.ResourceManager.GetString("SignUpLoginRemote"));
             }
             if (ModelState.IsValid)
             {
-                _userProvider.CreateNewUser(user);
+                await _userProvider.CreateNewUserAsync(user);
+                // TODO send email
                 return View("SignUpConfirmation");
             }
             else
@@ -78,14 +52,15 @@ namespace BabyDiary.Controllers
         }
 
         // GET: SignIn
-        public ActionResult SignIn()
+        public ActionResult SignIn(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SignIn(SignInDto model, string returnUrl)
+        public async Task<ActionResult> SignIn(SignInDto model, string returnUrl)
         {
             AuthenticationManager.SignOut();
             if (!ModelState.IsValid)
@@ -93,7 +68,7 @@ namespace BabyDiary.Controllers
                 return View(model);
             }
 
-            var result = _userProvider.GetUserSignIn(model);
+            var result = await _userProvider.SignInAsync(model);
             switch (result.State)
             {
                 case UserState.Success:
@@ -105,7 +80,7 @@ namespace BabyDiary.Controllers
                     return View("NotActivated");
                 case UserState.NotFound:
                 default:
-                    ModelState.AddModelError("Error", ValidationMessages.ResourceManager.GetString("InvalidUsernameOrPassword"));
+                    ModelState.AddModelError("", ValidationMessages.ResourceManager.GetString("InvalidUsernameOrPassword"));
                     return View(model);
             }
         }
@@ -114,10 +89,13 @@ namespace BabyDiary.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, userInfo.Login),
-                new Claim(ClaimTypes.Name, userInfo.Name)
+                new Claim(ClaimTypes.NameIdentifier, userInfo.Login)
             };
 
+            if (userInfo.Name != null)
+            {
+                claims.Add(new Claim(ClaimTypes.Name, userInfo.Name));
+            }
             // create required claims
             var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
@@ -129,33 +107,107 @@ namespace BabyDiary.Controllers
             }, identity);
         }
 
-        public ActionResult ActivateUser(string hash)
-        {
-            _userProvider.ActivateUser(hash);
-            return View("ActivateConfirmation");
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult IsEmailAvailble(string email)
+        public ActionResult LogOff()
         {
-            return Json(_userProvider.IsEmailAvailable(email), JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult IsLoginAvailble(string login)
-        {
-            return Json(_userProvider.IsLoginAvailable(login), JsonRequestBehavior.AllowGet);
-        }
-
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
+            AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<ActionResult> ActivateUser(string token)
+        {
+            if (token == null)
+                return View("Errors/Error404");
+            if (await _userProvider.ActivateUserAsync(token))
+                return View("ActivateConfirmation");
+            else
+                return View("Errors/Error404");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> IsEmailAvailble(string email)
+        {
+            return Json(await _userProvider.IsEmailAvailableAsync(email), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> IsLoginAvailble(string login)
+        {
+            return Json(await _userProvider.IsLoginAvailableAsync(login), JsonRequestBehavior.AllowGet);
+        }
+
+        //
+        // GET: /Account/ForgotPassword
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ForgotPassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordDto model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var code = await _userProvider.GeneratePasswordResetTokenAsync(model.Email);
+            if (code != null)
+            {
+                // TODO send Email
+            }
+            return View("ForgotPasswordConfirmation");
+
+//            var user = await UserManager.FindByNameAsync(model.Email);
+//            if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+//            {
+//                // Don't reveal that the user does not exist or is not confirmed
+//                return View("ForgotPasswordConfirmation");
+//            }
+//
+//            var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+//            var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+//            await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+//            ViewBag.Link = callbackUrl;
+//            return View("ForgotPasswordConfirmation");
+
+        }
+
+        //
+        // GET: /Account/ForgotPasswordConfirmation
+        public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Account/ResetPassword
+        public ActionResult ResetPassword(string code)
+        {
+            return code == null ? View("Errors/Error404") : View();
+        }
+
+        //
+        // POST: /Account/ResetPassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(ResetPasswordDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (await _userProvider.ResetPasswordAsync(model))
+            {
+                return View("ResetPasswordConfirmation");
+            }
+            else
+            {
+                return View("Errors/Error");
+            }
         }
 
     }

@@ -14,8 +14,9 @@ namespace BabyDiary
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/SignIn"),
-                CookieSecure = CookieSecureOption.Always
+                LoginPath = new PathString("/Account/SignIn")
+                // TODO SSL on production
+//                CookieSecure = CookieSecureOption.Always
             });
 
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);

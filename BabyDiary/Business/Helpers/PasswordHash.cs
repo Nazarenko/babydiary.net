@@ -9,10 +9,9 @@ namespace BabyDiary.Business.Helpers
         public const int HashByteSize = 64;
         public const int Pbkdf2Iterations = 5000;
 
-        public static string CreateRandomHash()
+        public static string GenerateToken()
         {
-            byte[] salt = CreateSalt();
-            return Convert.ToBase64String(salt);
+            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         }
 
         private static byte[] CreateSalt()
@@ -28,7 +27,7 @@ namespace BabyDiary.Business.Helpers
         /// </summary>
         /// <param name="password">The password to hash.</param>
         /// <returns>The hash of the password.</returns>
-        public static string CreateHash(string password)
+        public static string CreatePasswordHash(string password)
         {
             // Generate a random salt
             byte[] salt = CreateSalt();
@@ -65,7 +64,7 @@ namespace BabyDiary.Business.Helpers
             Buffer.BlockCopy(savedHashBytes, (salt.Length + savedPasswordBytes.Length), iterationsBytes, 0, iterationsLength);
 
             byte[] testHash = PBKDF2(password, salt, BitConverter.ToInt32(iterationsBytes, 0), HashByteSize);
-            return SlowEquals(savedHashBytes, testHash);
+            return SlowEquals(savedPasswordBytes, testHash);
         }
 
         /// <summary>
@@ -94,6 +93,11 @@ namespace BabyDiary.Business.Helpers
         /// <returns>A hash of the password.</returns>
         private static byte[] PBKDF2(string password, byte[] salt, int iterations, int outputBytes)
         {
+            System.Diagnostics.Debug.WriteLine(password);
+            System.Diagnostics.Debug.WriteLine(Convert.ToBase64String(salt));
+            System.Diagnostics.Debug.WriteLine(iterations);
+            System.Diagnostics.Debug.WriteLine(outputBytes);
+
             byte[] hashValue;
             using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations))
             {

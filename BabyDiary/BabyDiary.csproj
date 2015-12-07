@@ -211,6 +211,8 @@
     <Compile Include="Business\Helpers\PasswordHash.cs" />
     <Compile Include="Business\Interfaces\IUserProvider.cs" />
     <Compile Include="Business\UserProvider.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DiaryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="DAL\BabyDiaryLoggingInterceptor.cs" />
@@ -227,6 +229,8 @@
     <Compile Include="Logging\ILogging.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Models\DataAnnotationsResourcesModelMetadataProvider.cs" />
+    <Compile Include="Models\DTOs\ForgotPasswordDto.cs" />
+    <Compile Include="Models\DTOs\ResetPasswordDto.cs" />
     <Compile Include="Models\DTOs\SignInDto.cs" />
     <Compile Include="Models\DTOs\SignInInfoDto.cs" />
     <Compile Include="Models\DTOs\SignUpDto.cs" />
@@ -250,6 +254,14 @@
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\NotActivated.cshtml" />
+    <Content Include="Views\Shared\_LoginBlock.cshtml" />
+    <Content Include="Views\Diary\Index.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Shared\Errors\Error404.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Shared\Errors\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -260,6 +272,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\ValidationMessages.resx">

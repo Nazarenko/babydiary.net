@@ -1,6 +1,8 @@
 ﻿using BabyDiary.Business.Interfaces;
 using BabyDiary.DAL.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using BabyDiary.Business.Helpers;
 using BabyDiary.DAL.FilterSearch;
 using BabyDiary.Models.DTOs;
@@ -17,24 +19,21 @@ namespace BabyDiary.Business
             _userRepository = userRepository;
         }
 
-        public void ActivateUser(string hash)
+        public async Task<bool> ActivateUserAsync(string token)
         {
-            User user = _userRepository.FindUserBy(new Filter("ActivatedHash", hash));
-            if (user != null)
-            {
-                user.Activated = true;
-                user.ActivatedHash = null;
-                _userRepository.SaveChanges();
-            }
-            else
-            {
-                // TODO exception
-            }
+            var user = await _userRepository.FindUserByAsync(new Filter("ActivatedToken", token));
+
+            if (user == null) return false;
+
+            user.Activated = true;
+            user.ActivatedToken = null;
+            await _userRepository.SaveChangesAsync();
+            return true;
         }
 
-        public SignInInfoDto GetUserSignIn(SignInDto signInDto)
+        public async Task<SignInInfoDto> SignInAsync(SignInDto signInDto)
         {
-            var user = _userRepository.FindUserBy(new Filter("Login", signInDto.Login));
+            var user = await _userRepository.FindUserByAsync(new Filter("Login", signInDto.Login));
 
             if (user == null || !PasswordHash.ValidatePassword(signInDto.Password,user.Password))
             {
@@ -50,31 +49,62 @@ namespace BabyDiary.Business
 
         }
 
+        public async Task<string> GeneratePasswordResetTokenAsync(string email)
+        {
+            var user = await _userRepository.FindUserByAsync(new List<Filter>()
+            {
+                new Filter("Email", email),
+                new Filter("Activated", true)
+            });
+
+            if (user == null) return null;
+
+            user.ResetPasswordToken = PasswordHash.GenerateToken();
+            await _userRepository.SaveChangesAsync();
+            return user.ResetPasswordToken;
+        }
+
+        public async Task<bool> ResetPasswordAsync(ResetPasswordDto model)
+        {
+            var user = await _userRepository.FindUserByAsync(new List<Filter>()
+            {
+                new Filter("Email", model.Email),
+                new Filter("ResetPasswordToken", model.Code)
+            });
+
+            if (user == null) return false;
+
+            user.Password = PasswordHash.CreatePasswordHash(model.Password);
+            user.ResetPasswordToken = null;
+            await _userRepository.SaveChangesAsync();
+            return true;
+        }
+
         public void ChangePassword(string passwordOld, string passwordNew)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsEmailAvailable(string email)
+        public async Task<bool> IsEmailAvailableAsync(string email)
         {
-            return _userRepository.FindUserBy(new Filter("Email", email)) == null;
+            return await _userRepository.FindUserByAsync(new Filter("Email", email)) == null;
         }
 
-        public bool IsLoginAvailable(string login)
+        public async Task<bool> IsLoginAvailableAsync(string login)
         {
-            return _userRepository.FindUserBy(new Filter("Login", login)) == null;
+            return await _userRepository.FindUserByAsync(new Filter("Login", login)) == null;
         }
 
-        public void CreateNewUser(SignUpDto signUpDto)
+        public async Task CreateNewUserAsync(SignUpDto signUpDto)
         {
             User user = new User
             {
                 Email = signUpDto.Email,
                 Login = signUpDto.Login,
-                Password = PasswordHash.CreateHash(signUpDto.Password),
-                ActivatedHash = PasswordHash.CreateRandomHash()
-            };
-            _userRepository.CreateUser(user);
+                Password = PasswordHash.CreatePasswordHash(signUpDto.Password),
+                ActivatedToken = PasswordHash.GenerateToken()
+        };
+            await _userRepository.CreateUserAsync(user);
         }
     }
 }

@@ -1,0 +1,26 @@
+﻿@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+    <div class="col-md-6 col-sm-6 account-block">
+        <div class="float-right">
+            <a href="javascript:document.getElementById('logoutForm').submit()">Выход</a>
+        </div>
+        <div class="float-right">
+            [ @Html.ActionLink("nazarenko", "SignUp", "Account") ]
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-md-6 col-sm-6 account-block">
+        <div class="float-right">
+            @Html.ActionLink("Регистрация", "SignUp", "Account")
+        </div>
+        <div class="float-right">
+            @Html.ActionLink("Вход", "SignIn", "Account")
+        </div>
+    </div>
+}
