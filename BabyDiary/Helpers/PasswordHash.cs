@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace BabyDiary.Business.Helpers
+namespace BabyDiary.Helpers
 {
     public class PasswordHash
     {
@@ -11,7 +11,7 @@ namespace BabyDiary.Business.Helpers
 
         public static string GenerateToken()
         {
-            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            return Guid.NewGuid().ToString("N");
         }
 
         private static byte[] CreateSalt()
@@ -93,11 +93,6 @@ namespace BabyDiary.Business.Helpers
         /// <returns>A hash of the password.</returns>
         private static byte[] PBKDF2(string password, byte[] salt, int iterations, int outputBytes)
         {
-            System.Diagnostics.Debug.WriteLine(password);
-            System.Diagnostics.Debug.WriteLine(Convert.ToBase64String(salt));
-            System.Diagnostics.Debug.WriteLine(iterations);
-            System.Diagnostics.Debug.WriteLine(outputBytes);
-
             byte[] hashValue;
             using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations))
             {

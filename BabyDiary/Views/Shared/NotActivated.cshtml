@@ -3,12 +3,15 @@
     ViewBag.Title = "Учетная запись не активирована";
 }
 
-<div id="content" class="col-lg-12 col-md-12 col-sm-12">
-    <div class="block">
-        <h1>Учетная запись не активирована</h1>
-        <div class="sign-up-result">
-            Проверьте, пожалуйста, почту. На указанный при регистрации email было отправлено письмо с информацией по активации учетной записи.
-        </div>
-    </div>
+<div class="info-result">
+       Проверьте, пожалуйста, почту. На указанный при регистрации email было отправлено письмо с информацией по активации учетной записи.
 </div>
 
+
+@section Breadcrumb {
+    <ul class="breadcrumb">
+        <li>@Html.ActionLink("Главная", "Index", "Home")</li>
+        <li>@Html.ActionLink("Вход", "SignIn", "Account")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ul>
+}

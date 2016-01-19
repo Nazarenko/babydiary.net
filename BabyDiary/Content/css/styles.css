@@ -860,6 +860,7 @@ select.changed {
 h1 {
   font: normal 32px/38px Gabriela;
   color: #505050;
+  margin: 20px;
 }
 h1:first-letter {
   text-transform: uppercase;
@@ -1029,7 +1030,8 @@ a.desc:after {
   margin-top: -40px;
   margin-left: -40px;
 }
-.sign-up-block {
+.sign-up-block,
+.sign-in-block {
   width: 50%;
   margin: 0 auto;
 }
@@ -1037,7 +1039,7 @@ a.desc:after {
   margin-bottom: 10px;
   margin-top: 5px;
 }
-.sign-up-result {
+.info-result {
   text-align: center;
   width: 70%;
   margin: 60px auto 320px auto;

@@ -3,8 +3,8 @@ using BabyDiary.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BabyDiary.Business.Helpers;
 using BabyDiary.DAL.FilterSearch;
+using BabyDiary.Helpers;
 using BabyDiary.Models.DTOs;
 using BabyDiary.Models.Entities;
 
@@ -12,7 +12,13 @@ namespace BabyDiary.Business
 {
     public class UserProvider : IUserProvider
     {
+        public User User
+        {
+            get { return _user; }
+        }
+
         private readonly IUserRepository _userRepository;
+        private User _user;
 
         public UserProvider(IUserRepository userRepository)
         {
@@ -41,7 +47,7 @@ namespace BabyDiary.Business
             }
             else
             {
-                var result = new SignInInfoDto() {Name = user.Name, Login = user.Login, State = UserState.Success};
+                var result = new SignInInfoDto() {Sid = user.Sid, Name = user.Name, Login = user.Login, State = UserState.Success};
                 if (!user.Activated) result.State = UserState.NotActivated;
                 if (!user.Enabled) result.State = UserState.Locked;
                 return result;
@@ -54,7 +60,8 @@ namespace BabyDiary.Business
             var user = await _userRepository.FindUserByAsync(new List<Filter>()
             {
                 new Filter("Email", email),
-                new Filter("Activated", true)
+                new Filter("Activated", true),
+                new Filter("Enabled", true)
             });
 
             if (user == null) return null;
@@ -69,13 +76,15 @@ namespace BabyDiary.Business
             var user = await _userRepository.FindUserByAsync(new List<Filter>()
             {
                 new Filter("Email", model.Email),
-                new Filter("ResetPasswordToken", model.Code)
+                new Filter("ResetPasswordToken", model.Code),
+                new Filter("Enabled", true)
             });
 
             if (user == null) return false;
 
             user.Password = PasswordHash.CreatePasswordHash(model.Password);
             user.ResetPasswordToken = null;
+            user.Sid = PasswordHash.GenerateToken();
             await _userRepository.SaveChangesAsync();
             return true;
         }
@@ -102,9 +111,17 @@ namespace BabyDiary.Business
                 Email = signUpDto.Email,
                 Login = signUpDto.Login,
                 Password = PasswordHash.CreatePasswordHash(signUpDto.Password),
-                ActivatedToken = PasswordHash.GenerateToken()
+                ActivatedToken = PasswordHash.GenerateToken(),
+                Sid = PasswordHash.GenerateToken()
         };
             await _userRepository.CreateUserAsync(user);
+        }
+
+        public async Task<bool> LoadUserBySidAsync(string sid)
+        {
+            var user = await _userRepository.FindUserByAsync(new Filter("Sid", sid));
+            _user = user;
+            return user  != null;
         }
     }
 }

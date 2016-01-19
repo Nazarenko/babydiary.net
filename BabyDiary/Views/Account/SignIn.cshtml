@@ -7,45 +7,45 @@
     Html.EnableUnobtrusiveJavaScript();
 }
 
-<div id="content" class="col-lg-12 col-md-12 col-sm-12">
-    <div class="block">
-        <div class="ajax-loader">
-            <div class="spinner"></div>
-        </div>
-        <h1>@ViewBag.Title</h1>
-        <div class="sign-up-block">
-            @using (Html.BeginForm("SignIn", "Account", new {ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
+<div class="sign-in-block">
+    @using (Html.BeginForm("SignIn", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
 
-                @Html.AntiForgeryToken()
-                @Html.ValidationMessage("Error", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.Label("Логин", new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Login)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.Label("Пароль", new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Password)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.Label("Запомнить меня")
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" id="signUpButton" class="btn btn-primary">Войти</button>
-                </div>
-            }
-
+        @Html.AntiForgeryToken()
+        @Html.ValidationMessage("Error", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Логин", new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Login)
+            </div>
         </div>
-    </div>
+        <div class="form-group">
+            @Html.Label("Пароль", new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-9">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.Label("Запомнить меня")
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-9">
+                <button type="submit" id="signUpButton" class="btn btn-primary">Войти</button>
+            </div>
+        </div>
+        <p>
+            @Html.ActionLink("Забыли пароль?", "ForgotPassword")
+        </p>
+        <p>
+            @Html.ActionLink("Зарегистрироваться", "SignUp")
+        </p>
+    }
+
 </div>

@@ -8,6 +8,9 @@ namespace BabyDiary.Models.Entities
     {
         public long UserId { get; set; }
 
+        [StringLength(100)]
+        public string Sid { get; set; }
+
         [Required]
         [StringLength(100)]
         public string Email { get; set; }

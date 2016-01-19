@@ -15,6 +15,7 @@ namespace BabyDiary.Models.DTOs
 
     public class SignInInfoDto
     {
+        public string Sid { get; set; }
         public string Login { get; set; }
         public string Name { get; set; }
         public UserState State { get; set; }

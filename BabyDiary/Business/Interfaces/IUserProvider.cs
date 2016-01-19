@@ -12,7 +12,10 @@ namespace BabyDiary.Business.Interfaces
         Task<SignInInfoDto> SignInAsync(SignInDto signInDto);
         Task<string> GeneratePasswordResetTokenAsync(string email);
         Task<bool> ResetPasswordAsync(ResetPasswordDto resetPasswordDto);
+        Task<bool> LoadUserBySidAsync(string sid);
 
         void ChangePassword(string passwordOld, string passwordNew);
+
+
     }
 }

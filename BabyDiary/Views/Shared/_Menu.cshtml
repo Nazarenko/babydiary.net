@@ -1,0 +1,23 @@
+﻿@using BabyDiary.Helpers;
+
+<div class="col-md-12 col-sm-12">
+    <nav class="nav nav__primary">
+        <ul id="topnav" class="sf-menu sf-js-enabled">
+            <li class="first @Html.IsActive("Home", "current-menu-item")">
+                @Html.ActionLink("Главная", "Index", "Home")
+            </li>
+            <li class="second @Html.IsActive("Diary", "current-menu-item")">
+                @Html.ActionLink("Дневник","Index","Diary")
+            </li>
+            <li class="third">
+                <a href="diary" title="Мамы пишут">Мамы пишут</a>
+            </li>
+            <li class="fourth">
+                <a href="diary" title="Статьи">Статьи</a>
+            </li>
+            <li class="fifth">
+                <a href="diary" title="Контакты">Контакты</a>
+            </li>
+        </ul>
+    </nav>
+</div>                

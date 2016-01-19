@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace BabyDiary.DAL {
     using System;
     using System.Data.Entity;
@@ -22,7 +24,7 @@ namespace BabyDiary.DAL {
         {
         }
 
-        public override int SaveChanges()
+        public override async Task<int> SaveChangesAsync()
         {
             var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
@@ -37,7 +39,7 @@ namespace BabyDiary.DAL {
                 ((BaseEntity)entity.Entity).ModifiedDate = DateTime.Now;
             }
 
-            return base.SaveChanges();
+            return await base.SaveChangesAsync();
         }
     }
 }

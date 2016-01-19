@@ -89,7 +89,8 @@ namespace BabyDiary.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, userInfo.Login)
+                new Claim(ClaimTypes.NameIdentifier, userInfo.Login),
+                new Claim(ClaimTypes.Sid, userInfo.Sid),
             };
 
             if (userInfo.Name != null)
