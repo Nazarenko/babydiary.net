@@ -208,7 +208,10 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Business\CurrentUser.cs" />
+    <Compile Include="Business\Interfaces\ICurrentUser.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Helpers\InjectedWebViewPage.cs" />
     <Compile Include="Helpers\PasswordHash.cs" />
     <Compile Include="Business\Interfaces\IUserProvider.cs" />
     <Compile Include="Business\UserProvider.cs" />

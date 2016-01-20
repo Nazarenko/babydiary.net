@@ -12,17 +12,13 @@ namespace BabyDiary.Business
 {
     public class UserProvider : IUserProvider
     {
-        public User User
-        {
-            get { return _user; }
-        }
-
         private readonly IUserRepository _userRepository;
-        private User _user;
+        private readonly ICurrentUser _currentUser;
 
-        public UserProvider(IUserRepository userRepository)
+        public UserProvider(IUserRepository userRepository, ICurrentUser currentUser)
         {
             _userRepository = userRepository;
+            _currentUser = currentUser;
         }
 
         public async Task<bool> ActivateUserAsync(string token)
@@ -120,8 +116,8 @@ namespace BabyDiary.Business
         public async Task<bool> LoadUserBySidAsync(string sid)
         {
             var user = await _userRepository.FindUserByAsync(new Filter("Sid", sid));
-            _user = user;
-            return user  != null;
+            _currentUser.User = user;
+            return _currentUser.IsEnabled();
         }
     }
 }

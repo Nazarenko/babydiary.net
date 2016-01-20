@@ -9,7 +9,7 @@
             <a href="javascript:document.getElementById('logoutForm').submit()">Выход</a>
         </div>
         <div class="float-right">
-            [ @Html.ActionLink("nazarenko", "SignUp", "Account") ]
+            [ @Html.ActionLink(CurrentUser.Login, "SignUp", "Account") ]
         </div>
     </div>
 }

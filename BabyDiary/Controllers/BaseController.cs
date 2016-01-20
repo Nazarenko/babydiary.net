@@ -1,11 +1,20 @@
 ﻿using System.Security.Claims;
 using System.Web.Mvc;
 using System.Web.Routing;
+using BabyDiary.Business;
+using BabyDiary.Business.Interfaces;
 
 namespace BabyDiary.Controllers
 {
     public class BaseController : Controller
     {
+//        protected ICurrentUser CurrentUser { get; set; }
+//
+//        public BaseController(ICurrentUser currentUser)
+//        {
+//            CurrentUser = currentUser;
+//        }
+
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
@@ -22,7 +31,7 @@ namespace BabyDiary.Controllers
             //                var claims = user.Claims;
                             var claim = user.FindFirst(ClaimTypes.NameIdentifier);
                             if (claim != null)
-                                ViewBag.Username = claim.Value;
+                                ViewData.Add("Username", claim.Value);
                             //var id = GetClaim(claims, ClaimTypes.NameIdentifier);
             
                         }

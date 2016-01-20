@@ -29,9 +29,7 @@ namespace BabyDiary
                             IUserProvider userProvider = DependencyResolver.Current.GetService(typeof (IUserProvider)) as IUserProvider;
                             // TODO exception if null
                             if (userProvider != null)
-                                reject =
-                                    await
-                                        userProvider.LoadUserBySidAsync(
+                                reject = !await userProvider.LoadUserBySidAsync(
                                             context.Identity.FindFirstValue(ClaimTypes.Sid));
 //                        }
                         if (reject)
