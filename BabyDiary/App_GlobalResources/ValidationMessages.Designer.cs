@@ -61,6 +61,69 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Неверный формат даты.
+        /// </summary>
+        internal static string ChildBirthDateDate {
+            get {
+                return ResourceManager.GetString("ChildBirthDateDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Место рождения не должно превышать {1} символов.
+        /// </summary>
+        internal static string ChildBirthPlaceStringLength {
+            get {
+                return ResourceManager.GetString("ChildBirthPlaceStringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Время должно быть указано в формате 00:00.
+        /// </summary>
+        internal static string ChildBirthTimeRegularExpression {
+            get {
+                return ResourceManager.GetString("ChildBirthTimeRegularExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите имя ребенка.
+        /// </summary>
+        internal static string ChildFirstNameRequired {
+            get {
+                return ResourceManager.GetString("ChildFirstNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Имя не может содержать более {1} символов.
+        /// </summary>
+        internal static string ChildFirstNameStringLength {
+            get {
+                return ResourceManager.GetString("ChildFirstNameStringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Фамилия не может содержать более {1} символов.
+        /// </summary>
+        internal static string ChildLastNameStringLength {
+            get {
+                return ResourceManager.GetString("ChildLastNameStringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Отчество не может содержать более {1} символов.
+        /// </summary>
+        internal static string ChildSurnameStringLength {
+            get {
+                return ResourceManager.GetString("ChildSurnameStringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Подтверждение не совпадает с паролем.
         /// </summary>
         internal static string ConfirmPasswordCompare {
@@ -75,6 +138,24 @@ namespace Resources {
         internal static string ConfirmPasswordRequired {
             get {
                 return ResourceManager.GetString("ConfirmPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите название дневника.
+        /// </summary>
+        internal static string DiaryNameRequired {
+            get {
+                return ResourceManager.GetString("DiaryNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Название дневника не должно превышать {1} символов.
+        /// </summary>
+        internal static string DiaryNameStringLength {
+            get {
+                return ResourceManager.GetString("DiaryNameStringLength", resourceCulture);
             }
         }
         

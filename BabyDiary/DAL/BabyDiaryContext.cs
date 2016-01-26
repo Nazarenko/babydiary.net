@@ -19,6 +19,7 @@ namespace BabyDiary.DAL {
         }
 
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Child> Child { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,0 +1,58 @@
+/* ------------------- *\
+   FOR CLASSIC VERSION
+\* ------------------- */
+.dateselector-default select {
+    height: 34px;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    margin-bottom: 0;
+    -moz-appearance: none !important;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMTJweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIzcHgiIHZpZXdCb3g9IjAgMCA2IDMiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYgMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBvbHlnb24gcG9pbnRzPSI1Ljk5MiwwIDIuOTkyLDMgLTAuMDA4LDAgIi8+PC9zdmc+");
+    background-position: 100% center;
+    background-repeat: no-repeat;
+    border-color: #ccc;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 1px;
+    color: rgba(0, 0, 0, 0.75);
+    font-family: inherit;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+
+}
+/* Following width values to override if you want to change font size, select width... */
+.dateselector-default select:not(:last-child) { margin-right: 3px; }
+.dateselector-default .dateselector-year,
+.dateselector-default .dateselector-day,
+.dateselector-default .dateselector-hours,
+.dateselector-default .dateselector-minutes,
+.dateselector-default .dateselector-seconds { width: 80px; }
+.dateselector-default .dateselector-month { width: 120px; }
+
+/* --------------------- *\
+   FOR BOOTSTRAP VERSION
+\* --------------------- */
+.dateselector-bootstrap .dropdown { display: inline-block; }
+.dateselector-bootstrap .dropdown:not(:last-child) { margin-right: 3px; }
+.dateselector-bootstrap .dropdown .caret { margin-left: 5px; }
+
+/* ---------------------- *\
+   FOR FOUNDATION VERSION
+\* ---------------------- */
+.dateselector-foundation .dateselector-year,
+.dateselector-foundation .dateselector-month,
+.dateselector-foundation .dateselector-day,
+.dateselector-foundation .dateselector-hours,
+.dateselector-foundation .dateselector-minutes,
+.dateselector-foundation .dateselector-seconds { 
+  display: inline-block; 
+  margin-bottom: 0;
+}
+
+/* --------------- *\
+   FOR ALL VERSION
+\* --------------- */
+.dateselector-container {
+  margin-bottom: 15px;
+}

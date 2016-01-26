@@ -37,13 +37,13 @@ namespace BabyDiary.Business
         {
             var user = await _userRepository.FindUserByAsync(new Filter("Login", signInDto.Login));
 
-            if (user == null || !PasswordHash.ValidatePassword(signInDto.Password,user.Password))
+            if (user == null || !PasswordHash.ValidatePassword(signInDto.Password, user.Password))
             {
-                return new SignInInfoDto() {State = UserState.NotFound};
+                return new SignInInfoDto() { State = UserState.NotFound };
             }
             else
             {
-                var result = new SignInInfoDto() {Sid = user.Sid, Name = user.Name, Login = user.Login, State = UserState.Success};
+                var result = new SignInInfoDto() { Sid = user.Sid, Name = user.Name, Login = user.Login, State = UserState.Success };
                 if (!user.Activated) result.State = UserState.NotActivated;
                 if (!user.Enabled) result.State = UserState.Locked;
                 return result;
@@ -109,7 +109,8 @@ namespace BabyDiary.Business
                 Password = PasswordHash.CreatePasswordHash(signUpDto.Password),
                 ActivatedToken = PasswordHash.GenerateToken(),
                 Sid = PasswordHash.GenerateToken()
-        };
+            };
+//            System.Diagnostics.Debug.WriteLine("Password " + user.Password.Length);
             await _userRepository.CreateUserAsync(user);
         }
 

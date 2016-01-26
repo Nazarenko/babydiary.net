@@ -8,11 +8,11 @@ namespace BabyDiary.Models.Entities
     {
         public long UserId { get; set; }
 
-        [StringLength(100)]
+        [StringLength(32)]
         public string Sid { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(32)]
         public string Email { get; set; }
 
         [Required]
@@ -20,18 +20,18 @@ namespace BabyDiary.Models.Entities
         public string Login { get; set; }
 
         [Required]
-        [StringLength(255)]
+        [StringLength(176)]
         public string Password { get; set; }
 
         [StringLength(255)]
         public string Name { get; set; }
 
-        [StringLength(100)]
+        [StringLength(32)]
         public string ActivatedToken { get; set; }
 
         public bool Activated { get; set; }
 
-        [StringLength(100)]
+        [StringLength(32)]
         public string ResetPasswordToken { get; set; }
 
     }

@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChildBirthDateDate" xml:space="preserve">
+    <value>Неверный формат даты</value>
+  </data>
+  <data name="ChildBirthPlaceStringLength" xml:space="preserve">
+    <value>Место рождения не должно превышать {1} символов</value>
+  </data>
+  <data name="ChildBirthTimeRegularExpression" xml:space="preserve">
+    <value>Время должно быть указано в формате 00:00</value>
+  </data>
+  <data name="ChildFirstNameRequired" xml:space="preserve">
+    <value>Введите имя ребенка</value>
+  </data>
+  <data name="ChildFirstNameStringLength" xml:space="preserve">
+    <value>Имя не может содержать более {1} символов</value>
+  </data>
+  <data name="ChildLastNameStringLength" xml:space="preserve">
+    <value>Фамилия не может содержать более {1} символов</value>
+  </data>
+  <data name="ChildSurnameStringLength" xml:space="preserve">
+    <value>Отчество не может содержать более {1} символов</value>
+  </data>
   <data name="ConfirmPasswordCompare" xml:space="preserve">
     <value>Подтверждение не совпадает с паролем</value>
   </data>
   <data name="ConfirmPasswordRequired" xml:space="preserve">
     <value>Введите пароль еще раз</value>
+  </data>
+  <data name="DiaryNameRequired" xml:space="preserve">
+    <value>Введите название дневника</value>
+  </data>
+  <data name="DiaryNameStringLength" xml:space="preserve">
+    <value>Название дневника не должно превышать {1} символов</value>
   </data>
   <data name="EmailEmailAddress" xml:space="preserve">
     <value>Пожалуйста, укажите e-mail верного формата</value>

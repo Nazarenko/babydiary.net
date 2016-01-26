@@ -1,17 +1,48 @@
-﻿
+﻿@using BabyDiary.Models.DTOs
+@model ChildsListDto
+
 @{
-    ViewBag.Title = "Дневник малыша";
+    ViewBag.Title = "Дневники";
 }
 
-<div id="content" class="col-lg-12 col-md-12 col-sm-12">
-    <div class="block">
-        <h1>@ViewBag.Title</h1>
-    </div>
+@section Scripts
+{
+    <script src="~/Scripts/Vendor/jquery-ui-1.11.4.js" type="text/javascript"></script>
+    <script src="~/Scripts/Vendor/jquery.dateselector.js"></script>
+    <link href="~/Content/dateselector.css" rel="stylesheet" />
+    <script src="~/Scripts/Vendor/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/Vendor/jquery.inputmask/inputmask.js"></script>
+    <script src="~/Scripts/Vendor/jquery.inputmask/inputmask.date.extensions.js"></script>
+    <script src="~/Scripts/Vendor/jquery.inputmask/jquery.inputmask.js"></script>
+    <script src="~/Scripts/Vendor/knockout-3.4.0.js"></script>
+    <script src="~/Scripts/Vendor/knockout.mapping-latest.js"></script>
+    <script src="~/Scripts/App/koDateSelectorBinding.js"></script>
+    <script src="~/Scripts/App/koChildsVM.js"></script>
+    <script>
+        $(document).ready(function () {
+            moment.locale('ru');
+            var koDiariesVm = new DiariesViewModel('@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new ChildDto()))');
+
+            $("#BirthTime").inputmask({ mask: "h:s" });
+            //            $("#BirthDate").dateSelector({
+            //                minYear: 1980,
+            //                dateFormat: 'DD/MM/YYYY',
+            //                //                defaultValue: null,
+            //                hideSourceNode: false,
+            //                //update knockout observable
+            //                onDateChange: function () { $("#BirthDate").trigger("change") }
+            //            });
+            //            alert($("#BirthDate").dateSelector('getDateString'));
+        });
+    </script>
+}
+
+<div class="select-diary-block">
+    Выберите дневник Вашего малыша или создайте новый:
+
 </div>
 
-@section Breadcrumb {
-    <ul class="breadcrumb">
-        <li><a href="/">Главная</a></li>
-        <li class="active">Дневник</li>
-    </ul>
-}
+<div class="add-child-block" data-bind="with: newChild">
+    Добавить ребенка:
+    @{ Html.RenderPartial("_ChildDetail"); }
+</div>
