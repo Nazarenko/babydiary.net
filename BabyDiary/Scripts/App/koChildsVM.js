@@ -1,17 +1,39 @@
-﻿function Child(data) {
+﻿function ru__plural(word, num) {
+    var forms = word.split('_');
+    return num % 10 === 1 && num % 100 !== 11 ? forms[0] : (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2]);
+}
+function ru__relativeTimeWithPlural(number, key) {
+    var format = {
+        'mm': 'минута_минуты_минут',
+        'hh': 'час_часа_часов',
+        'dd': 'день_дня_дней',
+        'MM': 'месяц_месяца_месяцев',
+        'yy': 'год_года_лет'
+    };
+    return number + ' ' + ru__plural(format[key], +number);
+}
+
+function Child(data) {
     var self = this;
 
     // api
     self.load = function (data) {
         if (data) ko.mapping.fromJSON(data, {}, self);
-        self.BirthDate(moment().subtract(1, 'day').toDate());
         self.Age = ko.computed(function () {
-            var time = moment(self.BirthTime(), 'HH:mm');
-            var m = moment(self.BirthDate()).startOf('day');
-            if (time.isValid()) {
-                m.hours(time.hours()).minutes(time.minutes());
-            }
-            return m.fromNow(true);
+            var m = moment().startOf('day');
+            if (m.isSameOrBefore(self.BirthDate())) {
+                return '';
+            };
+            var years = m.diff(self.BirthDate(), "years");
+            if (years > 0)
+                return ru__relativeTimeWithPlural(years, 'yy');
+            var months = m.diff(self.BirthDate(), "months");
+            if (months > 0)
+                return ru__relativeTimeWithPlural(months, 'MM');
+
+            var days = m.diff(self.BirthDate(), "days");
+            return ru__relativeTimeWithPlural(days, 'dd');
+
         }, self);
     };
 
@@ -24,7 +46,8 @@ function DiariesViewModel(childEmpty) {
     var self = this;
 
     self.newChild = new Child(childEmpty);
-    //    self.newChild.BirthDate(new Date());
+    self.newChild.BirthDate(moment().startOf('day').toDate());
+    self.newChild.Sex('0');
 
     self.childs = ko.observableArray([]);
 
@@ -58,7 +81,16 @@ function DiariesViewModel(childEmpty) {
         });
     };
 
+
     // init
+    $.validator.setDefaults({
+        submitHandler: function (form) {
+            var context = ko.contextFor(form);
+            context.saveChild(context.$data);
+            return false; // for demo, blocks default submit, needed with ajax too.
+        }
+    });
+
     ko.applyBindings(self);
     //    self.getChilds();
 }

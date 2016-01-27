@@ -24,15 +24,6 @@
             var koDiariesVm = new DiariesViewModel('@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new ChildDto()))');
 
             $("#BirthTime").inputmask({ mask: "h:s" });
-            //            $("#BirthDate").dateSelector({
-            //                minYear: 1980,
-            //                dateFormat: 'DD/MM/YYYY',
-            //                //                defaultValue: null,
-            //                hideSourceNode: false,
-            //                //update knockout observable
-            //                onDateChange: function () { $("#BirthDate").trigger("change") }
-            //            });
-            //            alert($("#BirthDate").dateSelector('getDateString'));
         });
     </script>
 }

@@ -14,14 +14,14 @@
         <div class="form-group">
             @Html.Label("Имя", new { @class = "control-label col-md-3" })
             <div class="col-md-9">
-                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", data_bind = "textInput: FirstName" })
+                @Html.KoTextBoxFor(model => model.FirstName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FirstName)
             </div>
         </div>
         <div class="form-group">
             @Html.Label("Отчество", new { @class = "control-label col-md-3" })
             <div class="col-md-9">
-                @Html.TextBoxFor(model => model.Surname, new { @class = "form-control", data_bind = "textInput: Surname" })
+                @Html.KoTextBoxFor(model => model.Surname, new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.Surname)
             </div>
         </div>
@@ -36,28 +36,28 @@
         <div class="form-group">
             @Html.Label("Время рождения", new {@class = "control-label col-md-3"})
             <div class="col-md-9">
-                @Html.TextBoxFor(model => model.BirthTime, new {@class = "form-control", @placeholder = "00:00", data_bind = "textInput: BirthTime" })
+                @Html.KoTextBoxFor(model => model.BirthTime, new {@class = "form-control", @placeholder = "00:00" })
                 @Html.ValidationMessageFor(model => model.BirthTime)
             </div>
         </div>
         <div class="form-group">
             @Html.Label("Место рождения", new {@class = "control-label col-md-3"})
             <div class="col-md-9">
-                @Html.TextBoxFor(model => model.BirthPlace, new {@class = "form-control"})
+                @Html.KoTextBoxFor(model => model.BirthPlace, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.BirthPlace)
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-9">
-                @Html.RadioButtonFor(m => m.Sex, 0, new { @id = "GenderMale" })
+                @Html.KoRadioButtonFor(m => m.Sex, 0, new { @id = "GenderMale" })
                 @Html.Label("GenderMale","Мальчик")
-                @Html.RadioButtonFor(m => m.Sex, 1, new { @id = "GenderFemale" })
+                @Html.KoRadioButtonFor(m => m.Sex, 1, new { @id = "GenderFemale" })
                 @Html.Label("GenderMale", "Девочка")
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-9">
-                <button id="addChild" class="btn btn-primary"  data-bind="click: $root.saveChild">Сохранить</button>
+                <button id="addChild" type="submit" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
     </form>

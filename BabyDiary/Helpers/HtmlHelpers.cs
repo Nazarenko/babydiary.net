@@ -32,6 +32,15 @@ namespace BabyDiary.Helpers
             return htmlHelper.TextBoxFor(expression, AttributesWithBind(htmlAttributes, "textInput", expression));
         }
 
+        public static MvcHtmlString KoRadioButtonFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TProperty>> expression,
+            object value,
+            object htmlAttributes)
+        {
+            return htmlHelper.RadioButtonFor(expression, value,
+                AttributesWithBind(htmlAttributes, "checked", expression));
+        }
+
         public static HelperResult RenderSection(this WebPageBase webPage,
                                 string name, Func<dynamic, HelperResult> defaultContents)
         {

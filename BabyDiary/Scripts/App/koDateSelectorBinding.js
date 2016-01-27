@@ -25,11 +25,12 @@
         //        if (String(value).indexOf('/Date(') == 0) {
         //            value = new Date(parseInt(value.replace(/\/Date\((.*?)\)\//gi, "$1")));
         //        }
+        if (value != null) {
+            var current = $(element).dateSelector("getDate");
 
-        var current = $(element).dateSelector("getDate");
-
-        if (value - current !== 0) {
-            $el.dateSelector("setDate", value);
+            if (value - current !== 0) {
+                $el.dateSelector("setDate", value);
+            }
         }
     }
 };
