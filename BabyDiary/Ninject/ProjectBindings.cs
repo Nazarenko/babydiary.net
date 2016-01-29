@@ -16,11 +16,13 @@ namespace BabyDiary.Ninject
             Bind<BabyDiaryContext>().ToSelf().InRequestScope();
 
             Bind<IUserProvider>().To<UserProvider>().InRequestScope();
+            Bind<IChildProvider>().To<ChildProvider>().InRequestScope();
             Bind<ICurrentUser>().To<CurrentUser>().InRequestScope();
 
             Bind<IUserRepository>().To<UserRepository>().InRequestScope();
+            Bind<IChildRepository>().To<ChildRepository>().InRequestScope();
 
-//            Bind<WebViewPage>().To<InjectedWebViewPage>();
+            //            Bind<WebViewPage>().To<InjectedWebViewPage>();
         }
     }
 }

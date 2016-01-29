@@ -12,6 +12,13 @@ namespace BabyDiary.Controllers
     [Authorize]
     public class DiaryController : BaseController
     {
+        private readonly IChildProvider _childProvider;
+
+        public DiaryController(IChildProvider childProvider)
+        {
+            _childProvider = childProvider;
+        }
+
         // GET: Diary
         public ActionResult Index()
         {

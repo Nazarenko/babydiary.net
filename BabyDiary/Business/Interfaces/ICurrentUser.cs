@@ -12,5 +12,6 @@ namespace BabyDiary.Business.Interfaces
         User User { get; set; }
         bool IsEnabled();
         String Login { get; }
+        long UserId { get; }
     }
 }

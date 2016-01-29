@@ -16,5 +16,6 @@ namespace BabyDiary.Business
         }
 
         public string Login => User.Login;
+        public long UserId => User.UserId;
     }
 }

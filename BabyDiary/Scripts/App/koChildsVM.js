@@ -15,30 +15,34 @@ function ru__relativeTimeWithPlural(number, key) {
 
 function Child(data) {
     var self = this;
+    if (_.isObject(data)) {
+        ko.mapping.fromJS(data, {}, self);
+    } else {
+        ko.mapping.fromJSON(data, {}, self);
+    }
 
-    // api
-    self.load = function (data) {
-        if (data) ko.mapping.fromJSON(data, {}, self);
-        self.Age = ko.computed(function () {
-            var m = moment().startOf('day');
-            if (m.isSameOrBefore(self.BirthDate())) {
-                return '';
-            };
-            var years = m.diff(self.BirthDate(), "years");
-            if (years > 0)
-                return ru__relativeTimeWithPlural(years, 'yy');
-            var months = m.diff(self.BirthDate(), "months");
-            if (months > 0)
-                return ru__relativeTimeWithPlural(months, 'MM');
+    self.Age = ko.computed(function () {
+        var m = moment().startOf('day');
+        if (m.isSameOrBefore(self.BirthDate())) {
+            return '';
+        };
+        var years = m.diff(self.BirthDate(), "years");
+        if (years > 0)
+            return ru__relativeTimeWithPlural(years, 'yy');
+        var months = m.diff(self.BirthDate(), "months");
+        if (months > 0)
+            return ru__relativeTimeWithPlural(months, 'MM');
 
-            var days = m.diff(self.BirthDate(), "days");
-            return ru__relativeTimeWithPlural(days, 'dd');
+        var days = m.diff(self.BirthDate(), "days");
+        return ru__relativeTimeWithPlural(days, 'dd');
 
-        }, self);
-    };
+    }, self);
 
-    // init
-    self.load(data);
+    self.FullName = ko.computed(function () {
+        var fullname = self.LastName() + ' ' + self.FirstName() + ' ' + self.Surname();
+        return fullname.trim();
+
+    }, self);
 }
 
 function DiariesViewModel(childEmpty) {
@@ -49,11 +53,11 @@ function DiariesViewModel(childEmpty) {
     self.newChild.BirthDate(moment().startOf('day').toDate());
     self.newChild.Sex('0');
 
-    self.childs = ko.observableArray([]);
+    self.childs = ko.observableArray([]).extend({ deferred: true });;
 
     self.getChilds = function () {
         self.childs.removeAll();
-        $.getJSON('/child', function (data) {
+        $.getJSON('/childs', function (data) {
             $.each(data, function (key, value) {
                 self.childs.push(new Child(value));
             });
@@ -92,6 +96,6 @@ function DiariesViewModel(childEmpty) {
     });
 
     ko.applyBindings(self);
-    //    self.getChilds();
+    self.getChilds();
 }
 
