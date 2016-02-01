@@ -3,6 +3,9 @@
 
 @{
     ViewBag.Title = "Дневники";
+
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
 }
 
 @section Scripts
@@ -32,12 +35,16 @@
 <div class="select-diary-block">
     Выберите дневник Вашего малыша или создайте новый:
     <ul data-bind="foreach: $root.childs">
-        <li><span data-bind="text: FullName"></span> <span data-bind="text: Age"></span></li>
-    </ul>
+        <li><span data-bind="text: FullName"></span> <span data-bind="text: Age"></span><a href="#" data-bind="click: $parent.editChild">Edit</a><a href="#" data-bind="click: $parent.removeChild">Remove</a>
+        <div class="child-block" data-bind="template: { if: $root.isInEditMode($data), afterRender: $root.addValidation }">
+            @{ Html.RenderPartial("_ChildDetail"); }
+        </div>
+        </li>
+</ul>
 
 </div>
 
-<div class="add-child-block" data-bind="with: newChild">
-    Добавить ребенка:
+<a class="btn btn-primary" data-bind="click: $root.addChild">+ Добавить ребенка</a>
+<div class="child-block" data-bind="template: { if: $root.isInAddMode(), afterRender: $root.addValidation }">
     @{ Html.RenderPartial("_ChildDetail"); }
 </div>

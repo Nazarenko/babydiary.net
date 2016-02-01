@@ -22,7 +22,7 @@ namespace BabyDiary.Business
             _currentUser = currentUser;
         }
 
-        public async Task<List<ChildDto>> GetChilds()
+        public async Task<List<ChildDto>> GetChildsAsync()
         {
             List<Child> childs = await _childRepository.FindChildsForUserAsync(_currentUser.UserId);
             List<ChildDto> childsDto = new List<ChildDto>();
@@ -32,6 +32,11 @@ namespace BabyDiary.Business
                 childsDto.Add(childDto);
             }
             return childsDto;
+        }
+
+        public Task<ChildDto> SaveChildAsync(ChildDto child)
+        {
+            throw new NotImplementedException();
         }
     }
 }

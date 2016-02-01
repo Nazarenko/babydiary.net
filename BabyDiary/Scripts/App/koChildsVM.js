@@ -15,10 +15,28 @@ function ru__relativeTimeWithPlural(number, key) {
 
 function Child(data) {
     var self = this;
+    var mapping = {
+        'BirthDate': {
+            update: function (options) {
+                if (options.data === null) {
+                    return moment.utc().startOf('day').toDate();
+                }
+                if (_.isDate(options.data)) {
+                    return options.data;
+                }
+                return moment.utc(options.data).toDate();
+            }
+        },
+        'Sex': {
+            update: function (options) {
+                return options.data + '';
+            }
+        }
+    }
     if (_.isObject(data)) {
-        ko.mapping.fromJS(data, {}, self);
+        ko.mapping.fromJS(data, mapping, self);
     } else {
-        ko.mapping.fromJSON(data, {}, self);
+        ko.mapping.fromJSON(data, mapping, self);
     }
 
     self.Age = ko.computed(function () {
@@ -43,15 +61,15 @@ function Child(data) {
         return fullname.trim();
 
     }, self);
+
 }
 
 function DiariesViewModel(childEmpty) {
-
     var self = this;
 
-    self.newChild = new Child(childEmpty);
-    self.newChild.BirthDate(moment().startOf('day').toDate());
-    self.newChild.Sex('0');
+    self.newChild = childEmpty;
+
+    self.currentEditable = ko.observable(null);
 
     self.childs = ko.observableArray([]).extend({ deferred: true });;
 
@@ -64,14 +82,48 @@ function DiariesViewModel(childEmpty) {
         });
     };
 
-    self.saveChild = function (child) {
-        return $.ajax({
-            type: 'POST',
-            url: '/child',
-            data: ko.mapping.toJSON(child),
-            contentType: 'application/json; charset=utf-8'
-        });
+    self.saveChild = function (form) {
+//        if ($(form).valid()) {
+            return $.ajax({
+                type: 'POST',
+                url: '/child',
+                data: ko.mapping.toJSON(self.currentEditable()),
+                contentType: 'application/json; charset=utf-8'
+            });
+//        }
     };
+
+    self.editChild = function (child) {
+        self.currentEditable(new Child(ko.mapping.toJS(child)));
+    }
+
+    self.addChild = function () {
+        self.currentEditable(new Child(self.newChild));
+    }
+
+    self.addValidation = function () {
+        //        $.validator.unobtrusive.parse($("#child-detail-form"));
+        $("#child-detail-form").validateBootstrap(true);
+        console.log('hbvhblj');
+    }
+
+    self.isInEditMode = function (child) {
+        if (self.currentEditable() === null) {
+            return false;
+        }
+        return child.ChildId() === self.currentEditable().ChildId();
+    }
+
+    self.isInAddMode = function () {
+        if (self.currentEditable() === null) {
+            return false;
+        }
+        return self.currentEditable().ChildId() === 0;
+    }
+
+    self.cancel = function () {
+        self.currentEditable(null);
+    }
 
     // remove child. current data context object is passed to function automatically.
     self.removeChild = function (child) {
@@ -88,9 +140,8 @@ function DiariesViewModel(childEmpty) {
 
     // init
     $.validator.setDefaults({
-        submitHandler: function (form) {
-            var context = ko.contextFor(form);
-            context.saveChild(context.$data);
+        submitHandler: function () {
+            self.saveChild();
             return false; // for demo, blocks default submit, needed with ajax too.
         }
     });

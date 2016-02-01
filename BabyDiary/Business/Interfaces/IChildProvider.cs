@@ -9,6 +9,7 @@ namespace BabyDiary.Business.Interfaces
 {
     public interface IChildProvider
     {
-        Task<List<ChildDto>> GetChilds();
+        Task<List<ChildDto>> GetChildsAsync();
+        Task<ChildDto> SaveChildAsync(ChildDto child);
     }
 }

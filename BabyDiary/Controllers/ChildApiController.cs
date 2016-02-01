@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using BabyDiary.Business.Interfaces;
@@ -21,7 +23,23 @@ namespace BabyDiary.Controllers
         [Route("childs")]
         public async Task<List<ChildDto>> ChildsList()
         {
-            return await _childProvider.GetChilds();
+            return await _childProvider.GetChildsAsync();
+        }
+
+        // POST: child
+        [HttpPost]
+        [Route("child")]
+        public async Task<HttpResponseMessage> SaveChild(ChildDto childDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var child = await _childProvider.SaveChildAsync(childDto);
+                return Request.CreateResponse(HttpStatusCode.OK, child);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
         }
     }
 }
