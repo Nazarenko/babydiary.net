@@ -1009,32 +1009,14 @@ a.desc:after {
   padding: 10px 20px;
   margin: 0 0 15px 0;
 }
-.ajax-loader {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: url("img/loader/ajax-loader-bg.png");
-  z-index: 1000;
-}
-.ajax-loader .spinner {
-  background: url("img/loader/ajax-loader.gif");
-  width: 80px;
-  height: 80px;
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -40px;
-  margin-left: -40px;
-}
 .sign-up-block,
 .sign-in-block,
 .child-detail-block {
   width: 50%;
   margin: 0 auto;
+}
+.child-detail-block {
+  display: none;
 }
 .field-validation-error {
   margin-bottom: 10px;
@@ -1044,4 +1026,21 @@ a.desc:after {
   text-align: center;
   width: 70%;
   margin: 60px auto 320px auto;
+}
+.question {
+  display: none;
+}
+.blockUI.blockElement {
+  background-color: transparent !important;
+  left: -110px !important;
+  margin-left: 50% !important;
+  width: 220px !important;
+  border: none !important;
+}
+.spinner {
+  display: none;
+  background: url("img/loader/ajax-loader.gif");
+  width: 220px;
+  height: 19px;
+  margin: 0 auto;
 }

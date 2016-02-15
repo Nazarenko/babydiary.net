@@ -28,15 +28,51 @@ namespace BabyDiary.Business
             List<ChildDto> childsDto = new List<ChildDto>();
             foreach (var child in childs)
             {
-                ChildDto childDto = EntityMapper.ToChildDto(child);
+                ChildDto childDto = EntityMapper.ChildToDto(child);
                 childsDto.Add(childDto);
             }
             return childsDto;
         }
 
-        public Task<ChildDto> SaveChildAsync(ChildDto child)
+        public async Task<ChildDto> SaveChildAsync(ChildDto childDto)
         {
-            throw new NotImplementedException();
+            if (childDto.ChildId == 0)
+            {
+                var newChild = EntityMapper.DtoToChild(childDto);
+                newChild.UserId = _currentUser.UserId;
+                await _childRepository.CreateChildAsync(newChild);
+                childDto.ChildId = newChild.ChildId;
+                return childDto;
+            }
+            else
+            {
+                var child = await _childRepository.FindChildByIdAsync(childDto.ChildId);
+                if (child == null)
+                {
+                    throw new NotImplementedException();
+                }
+                if (child.UserId != _currentUser.UserId)
+                {
+                    throw new NotImplementedException();
+                }
+                EntityMapper.DtoToChild(childDto, child);
+                await _childRepository.SaveChangesAsync();
+                return childDto;
+            }
+        }
+
+        public async Task DeleteChildAsync(long childId)
+        {
+            var child = await _childRepository.FindChildByIdAsync(childId);
+            if (child == null)
+            {
+                throw new NotImplementedException();
+            }
+            if (child.UserId != _currentUser.UserId)
+            {
+                throw new NotImplementedException();
+            }
+            await _childRepository.DeleteChildAsync(child);
         }
     }
 }

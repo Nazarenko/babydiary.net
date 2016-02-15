@@ -8,6 +8,7 @@ namespace BabyDiary.Models.DTOs
 {
     public class ChildDto
     {
+
         public long ChildId { get; set; }
 
         [Required]
@@ -28,7 +29,8 @@ namespace BabyDiary.Models.DTOs
         [StringLength(255)]
         public string BirthPlace { get; set; }
 
-        public byte Sex { get; set; }
+        [StringLength(1)]
+        public string Sex { get; set; }
 
         public List<DiaryDto> Diaries { get; set; }
     }

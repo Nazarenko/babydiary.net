@@ -30,6 +30,7 @@ namespace BabyDiary.Models.Entities
         [StringLength(255)]
         public string BirthPlace { get; set; }
 
-        public byte Sex { get; set; }
+        [StringLength(1)]
+        public string Sex { get; set; }
     }
 }

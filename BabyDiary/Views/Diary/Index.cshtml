@@ -10,41 +10,57 @@
 
 @section Scripts
 {
+    <link href="~/Content/jquery-ui.css" rel="stylesheet"/>
     <script src="~/Scripts/Vendor/jquery-ui-1.11.4.js" type="text/javascript"></script>
     <script src="~/Scripts/Vendor/jquery.dateselector.js"></script>
-    <link href="~/Content/dateselector.css" rel="stylesheet" />
+    <link href="~/Content/dateselector.css" rel="stylesheet"/>
     <script src="~/Scripts/Vendor/moment-with-locales.min.js"></script>
     <script src="~/Scripts/Vendor/jquery.inputmask/inputmask.js"></script>
     <script src="~/Scripts/Vendor/jquery.inputmask/inputmask.date.extensions.js"></script>
     <script src="~/Scripts/Vendor/jquery.inputmask/jquery.inputmask.js"></script>
+    <script src="~/Scripts/Vendor/jquery.blockUI.js"></script>
     <script src="~/Scripts/Vendor/knockout-3.4.0.js"></script>
     <script src="~/Scripts/Vendor/knockout.mapping-latest.js"></script>
     <script src="~/Scripts/Vendor/underscore.min.js"></script>
-    <script src="~/Scripts/App/koDateSelectorBinding.js"></script>
+    <script src="~/Scripts/App/functionsHelper.js"></script>
     <script src="~/Scripts/App/koChildsVM.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             moment.locale('ru');
-            var koDiariesVm = new DiariesViewModel('@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new ChildDto()))');
+            var koDiariesVm = new DiariesViewModel();
 
-            $("#BirthTime").inputmask({ mask: "h:s" });
+            $(document).ajaxStart(function() {
+                $("#diary-content").block({
+                    message: $("#ajax-loader")
+                });
+            });
+            $(document).ajaxStop(function() { $("#diary-content").unblock() });
         });
     </script>
 }
 
-<div class="select-diary-block">
-    Выберите дневник Вашего малыша или создайте новый:
-    <ul data-bind="foreach: $root.childs">
-        <li><span data-bind="text: FullName"></span> <span data-bind="text: Age"></span><a href="#" data-bind="click: $parent.editChild">Edit</a><a href="#" data-bind="click: $parent.removeChild">Remove</a>
-        <div class="child-block" data-bind="template: { if: $root.isInEditMode($data), afterRender: $root.addValidation }">
-            @{ Html.RenderPartial("_ChildDetail"); }
-        </div>
-        </li>
-</ul>
+<div id="diary-content">
+    <div class="select-diary-block">
+        Выберите дневник Вашего малыша или создайте новый:
+        <ul data-bind="foreach: $root.childs">
+            <li>
+                <span data-bind="text: FullName"></span> <span data-bind="text: Age"></span>
+                <a href="#" data-bind="click: $parent.editChild">Edit</a>
+                <a href="#" data-bind="click: $parent.removeChild">Remove</a>
+                <div class="child-block" data-bind="template: { if: $root.isInEditMode($data), afterRender: $root.afterRenderChild }">
+                    @{ Html.RenderPartial("_ChildDetail"); }
+                </div>
+            </li>
+        </ul>
 
+    </div>
+
+    <a class="btn btn-primary" data-bind="click: $root.addChild">+ Добавить ребенка</a>
+    <div class="child-block" data-bind="template: { if: $root.isInAddMode(), afterRender: $root.afterRenderChild }">
+        @{ Html.RenderPartial("_ChildDetail"); }
+    </div>
 </div>
 
-<a class="btn btn-primary" data-bind="click: $root.addChild">+ Добавить ребенка</a>
-<div class="child-block" data-bind="template: { if: $root.isInAddMode(), afterRender: $root.addValidation }">
-    @{ Html.RenderPartial("_ChildDetail"); }
-</div>
+<div id="remove-child-question" class="question">
+    <span>Вы действительно хотите удалить все данные и дневники ребенка?</span>
+</div> 

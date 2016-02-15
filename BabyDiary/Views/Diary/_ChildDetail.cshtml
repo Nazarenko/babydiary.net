@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.Label("Дата рождения", new {@class = "control-label col-md-3"})
             <div class="col-md-9">
-                @Html.TextBoxFor(model => model.BirthDate, new {@class = "form-control", data_bind = "dateSelector: BirthDate, dateSelectorOptions: { minYear: 1980 }" })
+                @Html.KoTextBoxFor(model => model.BirthDate, new {@class = "form-control" })
                 @Html.ValidationMessageFor(model => model.BirthDate)
             </div>
 @*            <span data-bind = "text: Age()"></span>*@
@@ -49,17 +49,15 @@
         </div>
         <div class="form-group">
             <div class="col-md-9">
-                @Html.KoRadioButtonFor(m => m.Sex, 0, new { @id = "GenderMale" })
+                @Html.KoRadioButtonFor(m => m.Sex, "m", new { @id = "GenderMale" })
                 @Html.Label("GenderMale","Мальчик")
-                @Html.KoRadioButtonFor(m => m.Sex, 1, new { @id = "GenderFemale" })
+                @Html.KoRadioButtonFor(m => m.Sex, "f", new { @id = "GenderFemale" })
                 @Html.Label("GenderFemale", "Девочка")
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-9">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
-            </div>
-            <div class="col-md-9">
                 <a class="btn btn-primary" data-bind="click: $root.cancel">Отменить</a>
             </div>
         </div>

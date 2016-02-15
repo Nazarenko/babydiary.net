@@ -10,7 +10,9 @@ namespace BabyDiary.DAL.Interfaces
 {
     public interface IChildRepository : IRepository<Child>
     {
-        Task<List<Child>> FindChildsByAsync(IList<Filter> filters);
+        Task<Child> FindChildByIdAsync(long childId);
         Task<List<Child>> FindChildsForUserAsync(long userId);
+        Task<Child> CreateChildAsync(Child child);
+        Task<bool> DeleteChildAsync(Child child);
     }
 }

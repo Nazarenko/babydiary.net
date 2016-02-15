@@ -11,5 +11,6 @@ namespace BabyDiary.Business.Interfaces
     {
         Task<List<ChildDto>> GetChildsAsync();
         Task<ChildDto> SaveChildAsync(ChildDto child);
+        Task DeleteChildAsync(long childId);
     }
 }

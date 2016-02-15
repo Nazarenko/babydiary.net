@@ -1,73 +1,70 @@
-﻿function ru__plural(word, num) {
-    var forms = word.split('_');
-    return num % 10 === 1 && num % 100 !== 11 ? forms[0] : (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2]);
-}
-function ru__relativeTimeWithPlural(number, key) {
-    var format = {
-        'mm': 'минута_минуты_минут',
-        'hh': 'час_часа_часов',
-        'dd': 'день_дня_дней',
-        'MM': 'месяц_месяца_месяцев',
-        'yy': 'год_года_лет'
-    };
-    return number + ' ' + ru__plural(format[key], +number);
+﻿Child.prototype.toJSON = function () {
+    var copy = ko.toJS(this);
+    delete copy.Diaries;
+    return copy;
 }
 
 function Child(data) {
     var self = this;
-    var mapping = {
-        'BirthDate': {
-            update: function (options) {
-                if (options.data === null) {
-                    return moment.utc().startOf('day').toDate();
-                }
-                if (_.isDate(options.data)) {
-                    return options.data;
-                }
-                return moment.utc(options.data).toDate();
-            }
-        },
-        'Sex': {
-            update: function (options) {
-                return options.data + '';
-            }
+    self.ChildId = 0;
+    self.FirstName = "";
+    self.LastName = "";
+    self.Surname = "";
+    if (_.isUndefined(data)) {
+        self.BirthDate = moment.utc().startOf("day").toDate();
+    }
+    self.BirthTime = "";
+    self.BirthPlace = "";
+    self.Sex = "m";
+
+    self.load = function (data) {
+        var mapping = {
+            "observe": []
         }
-    }
-    if (_.isObject(data)) {
         ko.mapping.fromJS(data, mapping, self);
-    } else {
-        ko.mapping.fromJSON(data, mapping, self);
+
+        if (!_.isDate(self.BirthDate)) {
+            self.BirthDate = moment.utc(data.BirthDate).toDate();
+        }
+
+        self.Age = ko.computed(function () {
+            var m = moment().startOf("day");
+            if (m.isSameOrBefore(self.BirthDate)) {
+                return "";
+            };
+            var years = m.diff(self.BirthDate, "years");
+            if (years > 0)
+                return ru__relativeTimeWithPlural(years, "yy");
+            var months = m.diff(self.BirthDate, "months");
+            if (months > 0)
+                return ru__relativeTimeWithPlural(months, "MM");
+
+            var days = m.diff(self.BirthDate, "days");
+            return ru__relativeTimeWithPlural(days, "dd");
+
+        }, self);
+
+        self.FullName = ko.computed(function () {
+            var fullname = self.LastName + " " + self.FirstName + " " + self.Surname;
+            return fullname.trim();
+
+        }, self);
+    };
+    if (!_.isUndefined(data)) {
+        self.load(data);
     }
 
-    self.Age = ko.computed(function () {
-        var m = moment().startOf('day');
-        if (m.isSameOrBefore(self.BirthDate())) {
-            return '';
-        };
-        var years = m.diff(self.BirthDate(), "years");
-        if (years > 0)
-            return ru__relativeTimeWithPlural(years, 'yy');
-        var months = m.diff(self.BirthDate(), "months");
-        if (months > 0)
-            return ru__relativeTimeWithPlural(months, 'MM');
+    self.isEqual = function (child) {
+        return ko.mapping.toJSON(self) === ko.mapping.toJSON(child);
+    }
 
-        var days = m.diff(self.BirthDate(), "days");
-        return ru__relativeTimeWithPlural(days, 'dd');
-
-    }, self);
-
-    self.FullName = ko.computed(function () {
-        var fullname = self.LastName() + ' ' + self.FirstName() + ' ' + self.Surname();
-        return fullname.trim();
-
-    }, self);
-
+    //    self.toJSON = function(options) {
+    //        return _.omit(this.attributes, ["Diaries"]);
+    //    }
 }
 
-function DiariesViewModel(childEmpty) {
+function DiariesViewModel() {
     var self = this;
-
-    self.newChild = childEmpty;
 
     self.currentEditable = ko.observable(null);
 
@@ -75,50 +72,77 @@ function DiariesViewModel(childEmpty) {
 
     self.getChilds = function () {
         self.childs.removeAll();
-        $.getJSON('/childs', function (data) {
+        $.getJSON("/childs", function (data) {
             $.each(data, function (key, value) {
                 self.childs.push(new Child(value));
             });
         });
     };
 
-    self.saveChild = function (form) {
-//        if ($(form).valid()) {
-            return $.ajax({
-                type: 'POST',
-                url: '/child',
+    self.saveChild = function () {
+        var childId = self.currentEditable().ChildId;
+        if (childId === 0 || !_.findWhere(self.childs(), { ChildId: childId }).isEqual(self.currentEditable())) {
+            $.ajax({
+                type: "POST",
+                url: "/child",
                 data: ko.mapping.toJSON(self.currentEditable()),
-                contentType: 'application/json; charset=utf-8'
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    self.cancel();
+                    var newChild = new Child(data);
+                    var oldChild = ko.utils.arrayFirst(self.childs(), function (child) {
+                        return child.ChildId === newChild.ChildId;
+                    });
+                    if (oldChild == null) {
+                        self.childs.push(newChild);
+                    } else {
+                        self.childs.replace(oldChild, newChild);
+                    }
+                }
             });
-//        }
+        }
     };
 
     self.editChild = function (child) {
-        self.currentEditable(new Child(ko.mapping.toJS(child)));
+        self.currentEditable(ko.mapping.toJS(child));
     }
 
     self.addChild = function () {
-        self.currentEditable(new Child(self.newChild));
+        self.currentEditable(new Child());
     }
 
-    self.addValidation = function () {
-        //        $.validator.unobtrusive.parse($("#child-detail-form"));
-        $("#child-detail-form").validateBootstrap(true);
-        console.log('hbvhblj');
+    self.afterRenderChild = function (elements) {
+        //        $("#child-detail-form").validateBootstrap(true);
+        var $wrapper = $(elements[1]);
+        var $form = $wrapper.find("form");
+        $form.removeData("validator");
+        $form.removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse($form);
+
+        var $el = $form.find("#BirthDate");
+        var options = { minYear: 1980, defaultValue: self.currentEditable().BirthDate };
+        options.onDateChange = function () {
+            self.currentEditable().BirthDate = $el.dateSelector("getDate");
+        }
+        $el.dateSelector(options);
+
+        $form.find("#BirthTime").inputmask({ mask: "h:s" });
+
+        $wrapper.show();
     }
 
     self.isInEditMode = function (child) {
         if (self.currentEditable() === null) {
             return false;
         }
-        return child.ChildId() === self.currentEditable().ChildId();
+        return child.ChildId === self.currentEditable().ChildId;
     }
 
     self.isInAddMode = function () {
         if (self.currentEditable() === null) {
             return false;
         }
-        return self.currentEditable().ChildId() === 0;
+        return self.currentEditable().ChildId === 0;
     }
 
     self.cancel = function () {
@@ -127,12 +151,27 @@ function DiariesViewModel(childEmpty) {
 
     // remove child. current data context object is passed to function automatically.
     self.removeChild = function (child) {
-        $.ajax({
-            url: '/child/' + child.ChildId(),
-            type: 'delete',
-            contentType: 'application/json',
-            success: function () {
-                self.childs.remove(child);
+
+        $("#remove-child-question").dialog({
+            resizable: false,
+            height: 200,
+            modal: true,
+            title: child.FullName(), 
+            buttons: {
+                "Удалить": function () {
+                    $(this).dialog("close");
+                    $.ajax({
+                        url: "/child/" + child.ChildId,
+                        type: "delete",
+                        contentType: "application/json",
+                        success: function () {
+                            self.childs.remove(child);
+                        }
+                    });
+                },
+                "Отмена": function () {
+                    $(this).dialog("close");
+                }
             }
         });
     };

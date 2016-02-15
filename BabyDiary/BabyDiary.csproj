@@ -186,11 +186,29 @@
       <DependentUpon>styles.css</DependentUpon>
     </Content>
     <Content Include="Content\dateselector.css" />
+    <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\App\functionsHelper.js" />
     <Content Include="Scripts\App\koChildsVM.js" />
-    <Content Include="Scripts\App\koDateSelectorBinding.js" />
+    <Content Include="Scripts\jquery-ui-1.11.1.js" />
+    <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
+    <Content Include="Scripts\Vendor\jquery.blockUI.js" />
     <Content Include="Scripts\Vendor\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\Vendor\knockout-3.4.0.js" />
     <Content Include="Scripts\Vendor\knockout.mapping-latest.debug.js" />
@@ -285,6 +303,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ValidateModelAttribute.cs" />
     <Compile Include="Logging\ILogging.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Models\DataAnnotationsResourcesModelMetadataProvider.cs" />
@@ -338,7 +357,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\API\" />
-    <Folder Include="Data\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

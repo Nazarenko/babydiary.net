@@ -9,7 +9,7 @@ namespace BabyDiary.Helpers
 {
     public class EntityMapper
     {
-        public static ChildDto ToChildDto(Child child, ChildDto childDto = null)
+        public static ChildDto ChildToDto(Child child, ChildDto childDto = null)
         {
             if (childDto == null)
             {
@@ -25,6 +25,24 @@ namespace BabyDiary.Helpers
             childDto.Sex = child.Sex;
 
             return childDto;
+        }
+
+        public static Child DtoToChild(ChildDto childDto, Child child = null)
+        {
+            if (child == null)
+            {
+                child = new Child();
+            }
+            child.ChildId = childDto.ChildId;
+            child.FirstName = childDto.FirstName;
+            child.LastName = childDto.LastName;
+            child.Surname = childDto.Surname;
+            child.BirthDate = childDto.BirthDate;
+            child.BirthTime = childDto.BirthTime;
+            child.BirthPlace = childDto.BirthPlace;
+            child.Sex = childDto.Sex;
+
+            return child;
         }
     }
 }
